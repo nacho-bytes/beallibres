@@ -8,7 +8,6 @@ part of 'routes.dart';
 
 List<RouteBase> get $appRoutes => [
       $homeRoute,
-      $bookDetailsRoute,
     ];
 
 RouteBase get $homeRoute => GoRouteData.$route(
@@ -16,6 +15,16 @@ RouteBase get $homeRoute => GoRouteData.$route(
       name: 'home',
       factory: $HomeRouteExtension._fromState,
       routes: [
+        GoRouteData.$route(
+          path: '/book',
+          name: 'book-details',
+          factory: $BookDetailsRouteExtension._fromState,
+        ),
+        GoRouteData.$route(
+          path: '/login',
+          name: 'login',
+          factory: $LoginRouseExtension._fromState,
+        ),
         GoRouteData.$route(
           path: 'profile',
           name: 'profile',
@@ -34,6 +43,41 @@ extension $HomeRouteExtension on HomeRoute {
 
   String get location => GoRouteData.$location(
         '/',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $BookDetailsRouteExtension on BookDetailsRoute {
+  static BookDetailsRoute _fromState(GoRouterState state) =>
+      const BookDetailsRoute();
+
+  String get location => GoRouteData.$location(
+        '/book',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $LoginRouseExtension on LoginRouse {
+  static LoginRouse _fromState(GoRouterState state) => const LoginRouse();
+
+  String get location => GoRouteData.$location(
+        '/login',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -68,30 +112,6 @@ extension $AdminRouteExtension on AdminRoute {
 
   String get location => GoRouteData.$location(
         '/admin',
-      );
-
-  void go(BuildContext context) => context.go(location);
-
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
-
-  void replace(BuildContext context) => context.replace(location);
-}
-
-RouteBase get $bookDetailsRoute => GoRouteData.$route(
-      path: '/book',
-      name: 'book-details',
-      factory: $BookDetailsRouteExtension._fromState,
-    );
-
-extension $BookDetailsRouteExtension on BookDetailsRoute {
-  static BookDetailsRoute _fromState(GoRouterState state) =>
-      const BookDetailsRoute();
-
-  String get location => GoRouteData.$location(
-        '/book',
       );
 
   void go(BuildContext context) => context.go(location);
