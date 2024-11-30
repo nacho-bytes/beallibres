@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart' show BuildContext, Placeholder, Widget, immutable;
 import 'package:go_router/go_router.dart' show GoRouteData, GoRouterHelper, GoRouterState, RouteBase, RouteData, TypedGoRoute, TypedRoute;
 
+import '../pages/book_galery.dart' show BookGalery;
+
 part 'routes.g.dart';
 
 @TypedGoRoute<HomeRoute>(
@@ -35,7 +37,7 @@ class HomeRoute extends GoRouteData {
   Widget build(
     final BuildContext context,
     final GoRouterState state,
-  ) => const Placeholder();
+  ) => const BookGalery();
 }
 
 /// The login route.
