@@ -1,0 +1,8 @@
+{
+    "@@locale": "ca",
+
+    "appTitle": "BeaLlibres",
+    "@appTitle": {
+        "description": "App title"
+    }
+}
