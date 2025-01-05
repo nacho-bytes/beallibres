@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' show AnimatedSwitcher, Animation, BottomNavigationBar, BottomNavigationBarItem, BuildContext, Colors, Column, Drawer, Expanded, FadeTransition, Icon, IconData, KeyedSubtree, ListTile, MediaQuery, NavigationRail, NavigationRailDestination, Row, Scaffold, SizedBox, StatelessWidget, Text, ValueKey, VerticalDivider, Widget;
+import 'package:flutter/material.dart' show AnimatedSwitcher, Animation, Axis, BottomNavigationBar, BottomNavigationBarItem, BuildContext, Colors, Column, Drawer, Expanded, Icon, IconData, KeyedSubtree, ListTile, MediaQuery, NavigationRail, NavigationRailDestination, Row, Scaffold, SizeTransition, SizedBox, StatelessWidget, Text, ValueKey, VerticalDivider, Widget;
 import 'package:go_router/go_router.dart' show GoRouter, GoRouterHelper, GoRouterState;
 
 /// The navigation destination.
@@ -91,12 +91,14 @@ class AdaptiveNavigationTrail extends StatelessWidget {
       body: Row(
         children: <Widget>[
           AnimatedSwitcher(
-            duration: const Duration(milliseconds: 100),
+            duration: const Duration(milliseconds: 250),
             transitionBuilder: (
               final Widget child,
               final Animation<double> anim,
-            ) => FadeTransition(
-              opacity: anim,
+            ) => SizeTransition(
+              axis: Axis.horizontal,
+              axisAlignment: -1,
+              sizeFactor: anim,
               child: child,
             ),
             child: KeyedSubtree(
@@ -114,14 +116,13 @@ class AdaptiveNavigationTrail extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 Expanded(child: child ?? const SizedBox.shrink()),
-                // Anima solo la parte inferior (BottomNav o nada)
                 AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 300),
+                  duration: const Duration(milliseconds: 400),
                   transitionBuilder: (
                     final Widget child,
-                    final Animation<double> anim,
-                  ) => FadeTransition(
-                    opacity: anim,
+                    final Animation<double> animation,
+                  ) => SizeTransition(
+                    sizeFactor: animation,
                     child: child,
                   ),
                   child: KeyedSubtree(
