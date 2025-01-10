@@ -1,13 +1,6 @@
 import 'package:firebase_core/firebase_core.dart' show Firebase;
 import 'package:flutter/material.dart'
-    show
-        BuildContext,
-        Icons,
-        MaterialApp,
-        StatelessWidget,
-        Widget,
-        WidgetsFlutterBinding,
-        runApp;
+    show BuildContext, Icons, MaterialApp, StatelessWidget, ThemeData, ThemeExtension, Widget, WidgetsFlutterBinding, runApp;
 import 'package:flutter_bloc/flutter_bloc.dart' show BlocBuilder, BlocProvider;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart'
     show AppLocalizations;
@@ -20,6 +13,7 @@ import 'adaptative_navigation_trail.dart'
 import 'firebase_options.dart' show DefaultFirebaseOptions;
 import 'router/router_bloc.dart' show RouterBloc, RouterState;
 import 'router/routes.dart';
+import 'theme/spacing_theme_extension.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -69,6 +63,15 @@ class MyApp extends StatelessWidget {
         final BuildContext context,
         final RouterState routerState,
       ) => MaterialApp.router(
+        theme: ThemeData(
+          extensions: const <ThemeExtension<dynamic>>[
+            SpacingThemeExtension(
+              small: 4,
+              medium: 8,
+              large: 16,
+            ),
+          ],
+        ),
         routerConfig: GoRouter(
           initialLocation: const HomeRoute().location,
           routes: <RouteBase>[

@@ -4,5 +4,81 @@
     "appTitle": "BeaLlibres",
     "@appTitle": {
         "description": "App title"
+    },
+
+    "hello": "Hola {userName}!",
+    "@hello": {
+        "description": "Greeting",
+        "placeholders": {
+            "userName": {
+                "type": "String",
+                "example": "Pol Molina"
+            }
+        }
+    },
+
+    "addUser": "Afegir usuari",
+    "@addUser": {
+        "description": "Add user button"
+    },
+
+    "removeUser": "Eliminar usuari",
+    "@removeUser": {
+        "description": "Remove user button"
+    },
+
+    "addBook": "Afegir llibre",
+    "@addBook": {
+        "description": "Add book button"
+    },
+
+    "removeBook": "Eliminar llibre",
+    "@removeBook": {
+        "description": "Remove book button"
+    },
+
+    "addLending": "Afegir préstec",
+    "@addLending": {
+        "description": "Add lending button"
+    },
+
+    "endLending": "Finalitzar préstec",
+    "@endLending": {
+        "description": "End lending button"
+    },
+
+    "renewLending": "Renovar préstec",
+    "@renewLending": {
+        "description": "Renew lending button"
+    },
+
+    "consultLendings": "Consultar préstecs",
+    "@consultLendings": {
+        "description": "Consult lendings button"
+    },
+
+    "name": "Nom",
+    "@name": {
+        "description": "Name"
+    },
+
+    "surname": "Cognoms",
+    "@surname": {
+        "description": "Surname"
+    },
+
+    "email": "Correu electrònic",
+    "@email": {
+        "description": "Email"
+    },
+
+    "confirmEmail": "Confirma el correu electrònic",
+    "@confirmEmail": {
+        "description": "Confirm email"
+    },
+
+    "password": "Contrasenya",
+    "@password": {
+        "description": "Password"
     }
 }

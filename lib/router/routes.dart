@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' show BuildContext, Placeholder, Widget, immutable;
 import 'package:go_router/go_router.dart' show GoRouteData, GoRouterHelper, GoRouterState, RouteBase, RouteData, TypedGoRoute, TypedRoute;
 
-import '../pages/book_galery.dart' show BookGalery;
+import '../pages/pages.dart';
 
 part 'routes.g.dart';
 
@@ -24,6 +24,12 @@ part 'routes.g.dart';
     TypedGoRoute<AdminRoute>(
       name: 'admin',
       path: 'admin',
+      routes: <TypedRoute<RouteData>>[
+        TypedGoRoute<AddUserRoute>(
+          name: 'add-user',
+          path: 'add-user',
+        ),
+      ],
     ),
   ],
 )
@@ -37,7 +43,7 @@ class HomeRoute extends GoRouteData {
   Widget build(
     final BuildContext context,
     final GoRouterState state,
-  ) => const BookGalery();
+  ) => const BookGaleryPage();
 }
 
 /// The login route.
@@ -76,7 +82,20 @@ class AdminRoute extends GoRouteData {
   Widget build(
     final BuildContext context,
     final GoRouterState state,
-  ) => const Placeholder();
+  ) => const AdminPage();
+}
+
+/// The add user route.
+@immutable
+class AddUserRoute extends GoRouteData {
+  /// Creates the add user route.
+  const AddUserRoute();
+
+  @override
+  Widget build(
+    final BuildContext context,
+    final GoRouterState state,
+  ) => const AddUserPage();
 }
 
 /// The book details route.

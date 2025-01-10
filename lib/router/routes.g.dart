@@ -23,7 +23,7 @@ RouteBase get $homeRoute => GoRouteData.$route(
         GoRouteData.$route(
           path: '/login',
           name: 'login',
-          factory: $LoginRouseExtension._fromState,
+          factory: $LoginRouteExtension._fromState,
         ),
         GoRouteData.$route(
           path: 'profile',
@@ -34,6 +34,13 @@ RouteBase get $homeRoute => GoRouteData.$route(
           path: 'admin',
           name: 'admin',
           factory: $AdminRouteExtension._fromState,
+          routes: [
+            GoRouteData.$route(
+              path: 'add-user',
+              name: 'add-user',
+              factory: $AddUserRouteExtension._fromState,
+            ),
+          ],
         ),
       ],
     );
@@ -73,7 +80,7 @@ extension $BookDetailsRouteExtension on BookDetailsRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
-extension $LoginRouseExtension on LoginRoute {
+extension $LoginRouteExtension on LoginRoute {
   static LoginRoute _fromState(GoRouterState state) => const LoginRoute();
 
   String get location => GoRouteData.$location(
@@ -112,6 +119,23 @@ extension $AdminRouteExtension on AdminRoute {
 
   String get location => GoRouteData.$location(
         '/admin',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $AddUserRouteExtension on AddUserRoute {
+  static AddUserRoute _fromState(GoRouterState state) => const AddUserRoute();
+
+  String get location => GoRouteData.$location(
+        '/admin/add-user',
       );
 
   void go(BuildContext context) => context.go(location);

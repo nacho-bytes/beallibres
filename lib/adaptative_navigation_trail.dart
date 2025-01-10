@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' show AnimatedSwitcher, Animation, Axis, BottomNavigationBar, BottomNavigationBarItem, BuildContext, Colors, Column, Drawer, Expanded, Icon, IconData, KeyedSubtree, ListTile, MediaQuery, NavigationRail, NavigationRailDestination, Row, Scaffold, SizeTransition, SizedBox, StatelessWidget, Text, ValueKey, VerticalDivider, Widget;
+import 'package:flutter/material.dart' show AnimatedSwitcher, Animation, Axis, BuildContext, Colors, Column, Drawer, Expanded, Icon, IconData, KeyedSubtree, ListTile, MediaQuery, NavigationBar, NavigationDestination, NavigationRail, NavigationRailDestination, Row, Scaffold, SizeTransition, SizedBox, StatelessWidget, Text, ValueKey, VerticalDivider, Widget;
 import 'package:go_router/go_router.dart' show GoRouter, GoRouterHelper, GoRouterState;
 
 /// The navigation destination.
@@ -40,7 +40,7 @@ class AdaptiveNavigationTrail extends StatelessWidget {
   static bool _isMediumScreen(final BuildContext context) =>
     MediaQuery.of(context).size.width > 640.0;
 
-  int _computeSelectedIndex(final BuildContext context) {
+  int? _computeSelectedIndex(final BuildContext context) {
     final GoRouterState? state = GoRouter.of(context).state;
     final String? currentLocation = state?.matchedLocation; 
 
@@ -49,7 +49,7 @@ class AdaptiveNavigationTrail extends StatelessWidget {
         d.location == currentLocation,
     );
 
-    return index >= 0 ? index : 0;
+    return index >= 0 ? index : null;
   }
 
   void _onDestinationSelected(final BuildContext context, final int index) {
@@ -58,7 +58,7 @@ class AdaptiveNavigationTrail extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) {
-    final int currentIndex = _computeSelectedIndex(context);
+    final int? currentIndex = _computeSelectedIndex(context);
 
     final bool large = _isLargeScreen(context);
     final bool medium = _isMediumScreen(context);
@@ -139,21 +139,22 @@ class AdaptiveNavigationTrail extends StatelessWidget {
   }
 
   Widget _buildBottomNavigationBar(
-    final int currentIndex,
+    final int? currentIndex,
     final BuildContext context,
-  ) => BottomNavigationBar(
-    items: destinations.map(
-      (final AdaptativeNavigationDestination d) => BottomNavigationBarItem(
+  ) => NavigationBar(
+    
+    destinations: destinations.map(
+      (final AdaptativeNavigationDestination d) => NavigationDestination(
         icon: Icon(d.icon),
         label: d.title,
       ),
     ).toList(),
-    currentIndex: currentIndex,
-    onTap: (final int index) => _onDestinationSelected(context, index),
+    selectedIndex: currentIndex ?? 0, // TODO - Make it so it stays as the last selected
+    onDestinationSelected: (final int index) => _onDestinationSelected(context, index),
   );
 
   Widget _buildNavigationRail(
-    final int currentIndex,
+    final int? currentIndex,
     final BuildContext context,
   ) => NavigationRail(
     destinations: destinations.map(
@@ -172,7 +173,7 @@ class AdaptiveNavigationTrail extends StatelessWidget {
   );
 
   Widget _buildDrawer(
-    final int currentIndex,
+    final int? currentIndex,
     final BuildContext context,
   ) => Drawer(
     child: Column(

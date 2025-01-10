@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' show Icons;
 import 'package:flutter_bloc/flutter_bloc.dart' show Bloc, Emitter;
 
 import '../adaptative_navigation_trail.dart' show AdaptativeNavigationDestination;

@@ -3,11 +3,11 @@ import 'dart:math';
 import 'package:flutter/material.dart' show BoxFit, BuildContext, GridView, Image, SliverGridDelegateWithFixedCrossAxisCount, StatelessWidget, Widget;
 
 /// A widget that displays a grid of book covers.
-class BookGalery extends StatelessWidget {
+class BookGaleryPage extends StatelessWidget {
   /// Creates a widget that displays a grid of book covers.
   /// 
   /// The [key] is optional and defaults to `null`.
-  const BookGalery({
+  const BookGaleryPage({
     super.key,
   });
 

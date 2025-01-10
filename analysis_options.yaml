@@ -1,6 +1,8 @@
 include: package:flutter_lints/flutter.yaml
 
 analyzer:
+  errors:
+    always_put_required_named_parameters_first: ignore
   strong-mode:
     implicit-casts: false
     implicit-dynamic: false
