@@ -73,8 +73,8 @@ extension $BookDetailsRouteExtension on BookDetailsRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
-extension $LoginRouseExtension on LoginRouse {
-  static LoginRouse _fromState(GoRouterState state) => const LoginRouse();
+extension $LoginRouseExtension on LoginRoute {
+  static LoginRoute _fromState(GoRouterState state) => const LoginRoute();
 
   String get location => GoRouteData.$location(
         '/login',

@@ -5,15 +5,16 @@ import 'routes.dart';
 
 final List<AdaptativeNavigationDestination> _appDestinations =
     <AdaptativeNavigationDestination>[
-  const AdaptativeNavigationDestination(
+  AdaptativeNavigationDestination(
     title: 'Home',
     icon: Icons.home,
-    location: '/',
+    // location: '/',
+    location: const HomeRoute().location,
   ),
-  const AdaptativeNavigationDestination(
+  AdaptativeNavigationDestination(
     title: 'Profile',
     icon: Icons.person,
-    location: '/profile',
+    location: const ProfileRoute().location,
   ),
 ];
 

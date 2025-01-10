@@ -13,7 +13,7 @@ part 'routes.g.dart';
       name: 'book-details',
       path: '/book',
     ),
-    TypedGoRoute<LoginRouse>(
+    TypedGoRoute<LoginRoute>(
       name: 'login',
       path: '/login',
     ),
@@ -42,9 +42,9 @@ class HomeRoute extends GoRouteData {
 
 /// The login route.
 @immutable
-class LoginRouse extends GoRouteData {
+class LoginRoute extends GoRouteData {
   /// Creates the login route.
-  const LoginRouse();
+  const LoginRoute();
 
   @override
   Widget build(
