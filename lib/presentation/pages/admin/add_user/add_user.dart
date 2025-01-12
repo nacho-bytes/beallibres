@@ -21,7 +21,7 @@ import 'package:flutter/material.dart'
     Widget,
     showDialog;
 import 'package:flutter_bloc/flutter_bloc.dart' show BlocBuilder, BlocProvider;
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart' show AppLocalizations;
 import 'package:go_router/go_router.dart' show GoRouterHelper;
 
 import '../../../theme/spacing_theme_extension.dart' show SpacingThemeExtension;

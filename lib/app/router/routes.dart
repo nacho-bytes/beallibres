@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' show BuildContext, Placeholder, Widget, immutable;
 import 'package:go_router/go_router.dart' show GoRouteData, GoRouterHelper, GoRouterState, RouteBase, RouteData, TypedGoRoute, TypedRoute;
 
-import '../pages/pages.dart';
+import '../../presentation/pages/pages.dart' show AddUserPage, AdminPage, BookGaleryPage;
 
 part 'routes.g.dart';
 

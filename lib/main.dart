@@ -4,16 +4,15 @@ import 'package:flutter/material.dart'
 import 'package:flutter_bloc/flutter_bloc.dart' show BlocBuilder, BlocProvider;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart'
     show AppLocalizations;
-import 'package:go_router/go_router.dart';
+import 'package:go_router/go_router.dart' show GoRouter, GoRouterState, RouteBase, ShellRoute;
 
-import 'adaptative_navigation_trail.dart'
+import 'app/app.dart' show $AdminRouteExtension, $HomeRouteExtension, $ProfileRouteExtension, $appRoutes, AdminRoute, HomeRoute, ProfileRoute, RouterBloc, RouterState;
+import 'firebase_options.dart' show DefaultFirebaseOptions;
+import 'presentation/pages/adaptative_navigation_trail.dart'
     show
         AdaptativeNavigationDestination,
         AdaptiveNavigationTrail;
-import 'firebase_options.dart' show DefaultFirebaseOptions;
-import 'router/router_bloc.dart' show RouterBloc, RouterState;
-import 'router/routes.dart';
-import 'theme/spacing_theme_extension.dart';
+import 'presentation/theme/spacing_theme_extension.dart' show SpacingThemeExtension;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,7 +41,6 @@ class MyApp extends StatelessWidget {
           AdaptativeNavigationDestination(
             title: 'Home',
             icon: Icons.home,
-            // location: '/',
             location: const HomeRoute().location,
           ),
           AdaptativeNavigationDestination(

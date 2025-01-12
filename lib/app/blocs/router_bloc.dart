@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart' show Icons;
 import 'package:flutter_bloc/flutter_bloc.dart' show Bloc, Emitter;
 
-import '../adaptative_navigation_trail.dart' show AdaptativeNavigationDestination;
-import 'routes.dart';
+import '../../presentation/pages/adaptative_navigation_trail.dart' show AdaptativeNavigationDestination;
+import '../router/routes.dart' show $AdminRouteExtension, AdminRoute;
 
 class RouterState {
   const RouterState({

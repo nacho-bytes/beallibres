@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart'
     show BuildContext, Column, EdgeInsets, FilledButton, Padding, StatelessWidget, Text, Theme, Widget, Wrap;
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart' show AppLocalizations;
 import 'package:go_router/go_router.dart' show GoRouterHelper;
 
-import '../../router/routes.dart';
+import '../../../app/router/routes.dart' show $AddUserRouteExtension, AddUserRoute;
 import '../../theme/spacing_theme_extension.dart' show SpacingThemeExtension;
 
 export 'add_user/add_user.dart';
