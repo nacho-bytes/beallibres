@@ -24,7 +24,7 @@ import 'package:flutter_bloc/flutter_bloc.dart' show BlocBuilder, BlocProvider;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart' show AppLocalizations;
 import 'package:go_router/go_router.dart' show GoRouterHelper;
 
-import '../../../theme/spacing_theme_extension.dart' show SpacingThemeExtension;
+import '../../theme/spacing_theme_extension.dart' show SpacingThemeExtension;
 import 'add_user_bloc.dart' show AddUserBloc, AddUserState;
 
 class AddUserPage extends StatelessWidget {

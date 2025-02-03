@@ -3,10 +3,8 @@ import 'package:flutter/material.dart'
 import 'package:flutter_gen/gen_l10n/app_localizations.dart' show AppLocalizations;
 import 'package:go_router/go_router.dart' show GoRouterHelper;
 
-import '../../../app/router/routes.dart' show $AddUserRouteExtension, AddUserRoute;
+import '../../../app/routes/routes.dart' show $AddUserRouteExtension, AddUserRoute;
 import '../../theme/spacing_theme_extension.dart' show SpacingThemeExtension;
-
-export 'add_user/add_user.dart';
 
 class AdminPage extends StatelessWidget {
   const AdminPage({
@@ -26,7 +24,7 @@ class AdminPage extends StatelessWidget {
           Theme.of(context).extension<SpacingThemeExtension>()!.large,
       children: <Widget>[
         Text(
-          AppLocalizations.of(context)!.hello('Nacho'),
+          AppLocalizations.of(context)!.helloUser('Nacho'),
           style: Theme.of(context).textTheme.titleLarge,
         ),
         Wrap(

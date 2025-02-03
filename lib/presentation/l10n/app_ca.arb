@@ -6,8 +6,8 @@
         "description": "App title"
     },
 
-    "hello": "Hola {userName}!",
-    "@hello": {
+    "helloUser": "Hola {userName}!",
+    "@helloUser": {
         "description": "Greeting",
         "placeholders": {
             "userName": {
@@ -80,5 +80,125 @@
     "password": "Contrasenya",
     "@password": {
         "description": "Password"
+    },
+
+    "confirmPassword": "Confirma la contrasenya",
+    "@confirmPassword": {
+        "description": "Confirm password"
+    },
+
+    "requiredFieldError": "Camp obligatori",
+    "@requiredFieldError": {
+        "description": "Required field error"
+    },
+
+    "formatFieldError": "Format incorrecte",
+    "@formatFieldError": {
+        "description": "Format field error"
+    },
+
+    "matchFieldError": "Els camps no coincideixen",
+    "@matchFieldError": {
+        "description": "Math field error"
+    },
+
+    "passwordFormatError": "La contrasenya ha de entre 8 i 64 caràcters, una majúscula, una minúscula, un número i un caràcter especial",
+    "@passwordFormatError": {
+        "description": "Password format error"
+    },
+
+    "home": "Inici",
+    "@home": {
+        "description": "Home"
+    },
+
+    "profile": "Perfil",
+    "@profile": {
+        "description": "Profile"
+    },
+
+    "logout": "Tancar sessió",
+    "@logout": {
+        "description": "Logout"
+    },
+
+    "hello": "Et donem la benvinguda!",
+    "@hello": {
+        "description": "Greeting"
+    },
+
+    "helloAgain": "Hola de nou!",
+    "@helloAgain": {
+        "description": "Greeting again"
+    },
+
+    "login": "Inicia sessió",
+    "@login": {
+        "description": "Login"
+    },
+
+    "signUp": "Registra't",
+    "@signUp": {
+        "description": "Sign up"
+    },
+
+    "admin": "Admin",
+    "@admin": {
+        "description": "Admin"
+    },
+
+    "invalidEmail": "Correu electrònic invàlid",
+    "@invalidEmail": {
+        "description": "Invalid email"
+    },
+
+    "invalidPassword": "Contrasenya invàlida",
+    "@invalidPassword": {
+        "description": "Invalid password"
+    },
+
+    "userDisabled": "Usuari deshabilitat",
+    "@userDisabled": {
+        "description": "User disabled"
+    },
+
+    "emailAlreadyInUse": "Aquest correu electrònic ja està en ús",
+    "@emailAlreadyInUse": {
+        "description": "Email already in use"
+    },
+
+    "operationNotAllowed": "Operació no permesa",
+    "@operationNotAllowed": {
+        "description": "Operation not allowed"
+    },
+
+    "weakPassword": "Contrasenya feble",
+    "@weakPassword": {
+        "description": "Weak password"
+    },
+
+    "userNotFound": "Usuari no trobat",
+    "@userNotFound": {
+        "description": "User not found"
+    },
+
+    "wrongPassword": "Contrasenya incorrecta",
+    "@wrongPassword": {
+        "description": "Wrong password"
+    },
+
+    "logInError": "Error d'inici de sessió",
+    "@logInError": {
+        "description": "Login error"
+    },
+
+    "logInSuccess": "Sessió iniciada correctament",
+    "@logInSuccess": {
+        "description": "Login success"
+    },
+
+    "signUpError": "Error de registre",
+    "@signUpError": {
+        "description": "Signup error"
     }
 }

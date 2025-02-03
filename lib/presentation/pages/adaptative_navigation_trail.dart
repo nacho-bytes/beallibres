@@ -141,17 +141,21 @@ class AdaptiveNavigationTrail extends StatelessWidget {
   Widget _buildBottomNavigationBar(
     final int? currentIndex,
     final BuildContext context,
-  ) => NavigationBar(
-    
-    destinations: destinations.map(
-      (final AdaptativeNavigationDestination d) => NavigationDestination(
-        icon: Icon(d.icon),
-        label: d.title,
-      ),
-    ).toList(),
-    selectedIndex: currentIndex ?? 0, // TODO - Make it so it stays as the last selected
-    onDestinationSelected: (final int index) => _onDestinationSelected(context, index),
-  );
+  ) {
+    if (destinations.length <= 1) {
+      return const SizedBox.shrink();
+    }
+    return NavigationBar(
+      destinations: destinations.map(
+        (final AdaptativeNavigationDestination d) => NavigationDestination(
+          icon: Icon(d.icon),
+          label: d.title,
+        ),
+      ).toList(),
+      selectedIndex: currentIndex ?? 0, // TODO - Make it so it stays as the last selected
+      onDestinationSelected: (final int index) => _onDestinationSelected(context, index),
+    );
+  }
 
   Widget _buildNavigationRail(
     final int? currentIndex,

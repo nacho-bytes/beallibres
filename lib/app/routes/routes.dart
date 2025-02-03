@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' show BuildContext, Placeholder, Widget, immutable;
 import 'package:go_router/go_router.dart' show GoRouteData, GoRouterHelper, GoRouterState, RouteBase, RouteData, TypedGoRoute, TypedRoute;
 
-import '../../presentation/pages/pages.dart' show AddUserPage, AdminPage, BookGaleryPage;
+import '../../presentation/presentation.dart' show AddUserPage, AdminPage, BookGaleryPage, LoginPage, SignUpPage;
 
 part 'routes.g.dart';
 
@@ -11,11 +11,15 @@ part 'routes.g.dart';
   routes: <TypedRoute<RouteData>>[
     TypedGoRoute<BookDetailsRoute>(
       name: 'book-details',
-      path: '/book',
+      path: 'book',
     ),
     TypedGoRoute<LoginRoute>(
       name: 'login',
-      path: '/login',
+      path: 'login',
+    ),
+    TypedGoRoute<SignUpRoute>(
+      name: 'singup',
+      path: 'singup',
     ),
     TypedGoRoute<ProfileRoute>(
       name: 'profile',
@@ -56,7 +60,20 @@ class LoginRoute extends GoRouteData {
   Widget build(
     final BuildContext context,
     final GoRouterState state,
-  ) => const Placeholder();
+  ) => const LoginPage();
+}
+
+/// The register route.
+@immutable
+class SignUpRoute extends GoRouteData {
+  /// Creates the register route.
+  const SignUpRoute();
+
+  @override
+  Widget build(
+    final BuildContext context,
+    final GoRouterState state,
+  ) => const SignUpPage();
 }
 
 /// The profile route.

@@ -16,14 +16,19 @@ RouteBase get $homeRoute => GoRouteData.$route(
       factory: $HomeRouteExtension._fromState,
       routes: [
         GoRouteData.$route(
-          path: '/book',
+          path: 'book',
           name: 'book-details',
           factory: $BookDetailsRouteExtension._fromState,
         ),
         GoRouteData.$route(
-          path: '/login',
+          path: 'login',
           name: 'login',
           factory: $LoginRouteExtension._fromState,
+        ),
+        GoRouteData.$route(
+          path: 'singup',
+          name: 'singup',
+          factory: $SignUpRouteExtension._fromState,
         ),
         GoRouteData.$route(
           path: 'profile',
@@ -85,6 +90,23 @@ extension $LoginRouteExtension on LoginRoute {
 
   String get location => GoRouteData.$location(
         '/login',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $SignUpRouteExtension on SignUpRoute {
+  static SignUpRoute _fromState(GoRouterState state) => const SignUpRoute();
+
+  String get location => GoRouteData.$location(
+        '/singup',
       );
 
   void go(BuildContext context) => context.go(location);
