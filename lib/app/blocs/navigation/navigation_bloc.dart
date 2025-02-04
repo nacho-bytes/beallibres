@@ -27,6 +27,7 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
             destinations: NavigationState.anonymousDestinations(event.localizations),
           ),
         );
+      case UserType.unabled:
       case UserType.user:
         emit(
           state.copyWith(

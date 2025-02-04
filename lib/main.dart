@@ -119,7 +119,7 @@ class App extends StatelessWidget {
                       context.read<NavigationBloc>().add(
                         NavigationNewUserTypeEvent(
                           localizations: AppLocalizations.of(context)!,
-                          type: context.read<AuthenticationBloc>().state.user.data.userType,
+                          type: context.read<AuthenticationBloc>().state.user.userType,
                         ),
                       );
                     }
@@ -131,7 +131,7 @@ class App extends StatelessWidget {
                         context.read<NavigationBloc>().add(
                           NavigationNewUserTypeEvent(
                             localizations: AppLocalizations.of(context)!,
-                            type: authenticationState.user.data.userType,
+                            type: authenticationState.user.userType,
                           ),
                         );
                       },
@@ -139,8 +139,8 @@ class App extends StatelessWidget {
                         final AuthenticationState previous,
                         final AuthenticationState current,
                       ) =>
-                          previous.user.data.userType !=
-                          current.user.data.userType,
+                          previous.user.userType !=
+                          current.user.userType,
                       child: BlocBuilder<NavigationBloc, NavigationState>(
                         builder: (
                           final BuildContext context,

@@ -21,7 +21,7 @@ class NavigationState {
         icon: Icons.home,
         location: const HomeRoute().location,
       ),
-    ]; 
+    ];
 
   static List<AdaptativeNavigationDestination> anonymousDestinations(
     final AppLocalizations localizations,
@@ -43,22 +43,16 @@ class NavigationState {
       icon: Icons.person,
       location: const ProfileRoute().location,
     ),
-    AdaptativeNavigationDestination(
-      title: 'Log out',
-      icon: Icons.logout,
-      location: const LoginRoute().location, // TODO - Switch to logout route
-    ),
   ];
 
   static List<AdaptativeNavigationDestination> adminDestinations(
     final AppLocalizations localizations,
   ) => <AdaptativeNavigationDestination>[
-    ...userDestinations(localizations).sublist(0, userDestinations(localizations).length - 1), // Without the logout destination
+    ...userDestinations(localizations),
     AdaptativeNavigationDestination(
       title: localizations.admin,
       icon: Icons.admin_panel_settings,
       location: const AdminRoute().location,
     ),
-    userDestinations(localizations).last, // Add the logout destination
   ];
 }

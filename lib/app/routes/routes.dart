@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart' show BuildContext, Placeholder, Widget, immutable;
 import 'package:go_router/go_router.dart' show GoRouteData, GoRouterHelper, GoRouterState, RouteBase, RouteData, TypedGoRoute, TypedRoute;
 
-import '../../presentation/presentation.dart' show AddUserPage, AdminPage, BookGaleryPage, LoginPage, SignUpPage;
+import '../../presentation/presentation.dart' show AddUserPage, AdminPage, BookGaleryPage, LoginPage, ProfilePage, SignUpPage;
 
 part 'routes.g.dart';
 
@@ -86,7 +86,7 @@ class ProfileRoute extends GoRouteData {
   Widget build(
     final BuildContext context,
     final GoRouterState state,
-  ) => const Placeholder();
+  ) => const ProfilePage();
 }
 
 /// The admin route.

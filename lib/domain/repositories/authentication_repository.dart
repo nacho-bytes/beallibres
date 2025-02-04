@@ -169,5 +169,5 @@ class AuthenticationRepository {
 
 extension on firebase_auth.User {
   /// Maps a [firebase_auth.User] into a [User].
-  User get toUser => User(uid: uid, email: email,);
+  User get toUser => User(uid: uid, email: email, isAuthenticated: uid.isNotEmpty);
 }

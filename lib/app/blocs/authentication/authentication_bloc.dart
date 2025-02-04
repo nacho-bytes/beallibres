@@ -28,7 +28,7 @@ class AuthenticationBloc
   ) => emit.onEach(
     _authenticationRepository.user,
     onData: (final User user) async {
-      if (user == User.empty) {
+      if (!user.isAuthenticated) {
         emit(const AuthenticationState());
         return;
       }
