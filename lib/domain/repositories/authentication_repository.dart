@@ -66,6 +66,28 @@ class LogInWithEmailAndPasswordFailure implements Exception {
   final String code;
 }
 
+/// Thrown during the anonymous sign in process if a failure occurs.
+/// https://pub.dev/documentation/firebase_auth/latest/firebase_auth/FirebaseAuth/signInAnonymously.html
+class AnonymousSignInFailure implements Exception {
+  const AnonymousSignInFailure([
+    this.code = 'unknown',
+  ]);
+
+  /// Crea un mensaje de error
+  /// a partir de un código de excepción de firebase_auth.
+  String getErrorMessage(final AppLocalizations localizations) {
+    switch (code) {
+      case 'operation-not-allowed':
+        return localizations.operationNotAllowed;
+      default:
+        return localizations.logInError;
+    }
+  }
+
+  /// El código de error.
+  final String code;
+}
+
 /// Thrown during the logout process if a failure occurs.
 class LogOutFailure implements Exception {}
 
@@ -152,6 +174,19 @@ class AuthenticationRepository {
     }
   }
 
+  /// Signs in anonymously.
+  /// 
+  /// Throws a [AnonymousSignInFailure] if an exception occurs.
+  Future<void> logInAnonymously() async {
+    try {
+      await _firebaseAuth.signInAnonymously();
+    } on firebase_auth.FirebaseAuthException catch (e) {
+      throw AnonymousSignInFailure(e.code);
+    } catch (_) {
+      throw const AnonymousSignInFailure();
+    }
+  }
+
   /// Signs out the current user which will emit
   /// [User.empty] from the [user] Stream.
   ///
@@ -169,5 +204,8 @@ class AuthenticationRepository {
 
 extension on firebase_auth.User {
   /// Maps a [firebase_auth.User] into a [User].
-  User get toUser => User(uid: uid, email: email, isAuthenticated: uid.isNotEmpty);
+  User get toUser => User(
+    uid: uid,
+    email: email,
+  );
 }

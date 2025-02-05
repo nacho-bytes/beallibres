@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart' show Equatable;
 
 enum UserType {
+  none,
   anonymous,
   unabled,
   user,
@@ -11,20 +12,19 @@ class User extends Equatable {
   const User({
     final String? uid,
     final String? email,
-    final bool? isAuthenticated,
     final UserData? data,
   })  : uid = uid ?? '',
         email = email ?? '',
-        isAuthenticated = isAuthenticated ?? false,
         data = data ?? UserData.empty;
 
   final String uid;
   final String email;
-  final bool isAuthenticated;
   final UserData data;
 
   UserType get userType {
-    if (!isAuthenticated) {
+    if (isEmpty) {
+      return UserType.none;
+    } else if (uid.isNotEmpty && email.isEmpty) {
       return UserType.anonymous;
     } else {
       return data.userType;
@@ -33,26 +33,25 @@ class User extends Equatable {
 
   static const User empty = User();
 
+  bool get isEmpty => this == User.empty;
+
   User copyWith({
     final String? uid,
     final String? email,
-    final bool? isAuthenticated,
     final UserData? data,
   }) => User(
     uid: uid ?? this.uid,
     email: email ?? this.email,
-    isAuthenticated: isAuthenticated ?? this.isAuthenticated,
     data: data ?? this.data,
   );
 
   @override
-  List<Object?> get props => <Object?>[uid, email, isAuthenticated, data];
+  List<Object?> get props => <Object?>[uid, email, data];
 
   @override
   String toString() => 'User{'
     'uid: $uid'
     ', email: $email'
-    ', isAuthenticated: $isAuthenticated'
     ', data: $data'
   '}';
 }

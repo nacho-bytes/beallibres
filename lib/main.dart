@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart' show Firebase;
 import 'package:flutter/material.dart'
-    show BuildContext, Builder, MaterialApp, StatelessWidget, ThemeData, ThemeExtension, Widget, WidgetsFlutterBinding, runApp;
+    show BuildContext, MaterialApp, StatelessWidget, ThemeData, ThemeExtension, Widget, WidgetsFlutterBinding, runApp;
 import 'package:flutter_bloc/flutter_bloc.dart'
     show
         Bloc,
@@ -18,18 +18,8 @@ import 'package:go_router/go_router.dart'
 import 'package:nested/nested.dart' show SingleChildWidget;
 
 import 'app/app.dart'
-    show
-        $HomeRouteExtension,
-        $appRoutes,
-        AppBlocObserver,
-        AuthenticationBloc,
-        AuthenticationState,
-        AuthenticationSubscriptionRequested,
-        HomeRoute,
-        NavigationBloc,
-        NavigationNewUserTypeEvent,
-        NavigationState;
-import 'domain/domain.dart' show AuthenticationRepository, UsersRepository;
+    show $HomeRouteExtension, $appRoutes, AppBlocObserver, AuthenticationBloc, AuthenticationState, AuthenticationSubscriptionRequested, HomeRoute, NavigationBloc, NavigationNewUserTypeEvent, NavigationState, UserType;
+import 'domain/domain.dart' show AuthenticationRepository, BooksRepository, UsersRepository;
 import 'firebase_options.dart' show DefaultFirebaseOptions;
 import 'presentation/presentation.dart'
     show AdaptiveNavigationTrail, SpacingThemeExtension;
@@ -44,13 +34,19 @@ void main() async {
   final AuthenticationRepository authenticationRepository =
       AuthenticationRepository();
   await authenticationRepository.user.first;
+  if (authenticationRepository.currentUser.isEmpty) {
+    await authenticationRepository.logInAnonymously();
+  }
 
   final UsersRepository usersRepository = UsersRepository();
+
+  final BooksRepository booksRepository = BooksRepository();
 
   runApp(
     App(
       authenticationRepository: authenticationRepository,
       usersRepository: usersRepository,
+      booksRepository: booksRepository,
     ),
   );
 }
@@ -65,12 +61,15 @@ class App extends StatelessWidget {
   const App({
     required final AuthenticationRepository authenticationRepository,
     required final UsersRepository usersRepository,
+    required final BooksRepository booksRepository,
     super.key,
   }) :  _authenticationRepository = authenticationRepository,
-        _usersRepository = usersRepository;
+        _usersRepository = usersRepository,
+        _booksRepository = booksRepository;
 
   final AuthenticationRepository _authenticationRepository;
   final UsersRepository _usersRepository;
+  final BooksRepository _booksRepository;
 
   @override
   Widget build(final BuildContext context) => MultiRepositoryProvider(
@@ -80,6 +79,9 @@ class App extends StatelessWidget {
       ),
       RepositoryProvider<UsersRepository>.value(
         value: _usersRepository,
+      ),
+      RepositoryProvider<BooksRepository>.value(
+        value: _booksRepository,
       ),
     ],
     child: MultiBlocProvider(
@@ -112,47 +114,34 @@ class App extends StatelessWidget {
                 final Widget child,
               ) => BlocProvider<NavigationBloc>(
                 create: (final BuildContext context) => NavigationBloc(),
-                child: Builder(
-                  builder: (final BuildContext context) {
-                    // TODO - Should be a better way to do this
-                    if (context.read<NavigationBloc>().state.destinations.isEmpty) {
-                      context.read<NavigationBloc>().add(
-                        NavigationNewUserTypeEvent(
-                          localizations: AppLocalizations.of(context)!,
-                          type: context.read<AuthenticationBloc>().state.user.userType,
-                        ),
-                      );
-                    }
-                    return BlocListener<AuthenticationBloc, AuthenticationState>(
-                      listener: (
-                        final BuildContext context,
-                        final AuthenticationState authenticationState,
-                      ) {
-                        context.read<NavigationBloc>().add(
-                          NavigationNewUserTypeEvent(
-                            localizations: AppLocalizations.of(context)!,
-                            type: authenticationState.user.userType,
-                          ),
-                        );
-                      },
-                      listenWhen: (
-                        final AuthenticationState previous,
-                        final AuthenticationState current,
-                      ) =>
-                          previous.user.userType !=
-                          current.user.userType,
-                      child: BlocBuilder<NavigationBloc, NavigationState>(
-                        builder: (
-                          final BuildContext context,
-                          final NavigationState navigationState,
-                        ) =>
-                            AdaptiveNavigationTrail(
-                          destinations: navigationState.destinations,
-                          child: child,
-                        ),
+                child: BlocListener<AuthenticationBloc, AuthenticationState>(
+                  listenWhen: (
+                    final AuthenticationState previous,
+                    final AuthenticationState current,
+                  ) =>
+                      previous.user.userType != current.user.userType ||
+                        (previous.user.userType == UserType.none &&
+                          current.user.userType != UserType.none),
+                  listener: (
+                    final BuildContext context,
+                    final AuthenticationState authenticationState,
+                  ) {
+                    context.read<NavigationBloc>().add(
+                      NavigationNewUserTypeEvent(
+                        localizations: AppLocalizations.of(context)!,
+                        type: authenticationState.user.userType,
                       ),
                     );
                   },
+                  child: BlocBuilder<NavigationBloc, NavigationState>(
+                    builder: (
+                      final BuildContext context,
+                      final NavigationState navigationState,
+                    ) => AdaptiveNavigationTrail(
+                      destinations: navigationState.destinations,
+                      child: child,
+                    ),
+                  ),
                 ),
               ),
               routes: $appRoutes,

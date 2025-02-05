@@ -21,6 +21,8 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
     final Emitter<NavigationState> emit,
   ) async {
     switch (event.type) {
+      case UserType.none:
+        break;
       case UserType.anonymous:
         emit(
           state.copyWith(

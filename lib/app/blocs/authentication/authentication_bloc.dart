@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart' show Equatable;
 import 'package:flutter_bloc/flutter_bloc.dart' show Bloc, Emitter;
 
 import '../../../domain/domain.dart' show AuthenticationRepository, UsersRepository;
-import '../../app.dart' show User, UserData;
+import '../../app.dart' show User, UserData, UserType;
 
 part 'authentication_event.dart';
 part 'authentication_state.dart';
@@ -28,8 +28,15 @@ class AuthenticationBloc
   ) => emit.onEach(
     _authenticationRepository.user,
     onData: (final User user) async {
-      if (!user.isAuthenticated) {
+      if (user.isEmpty) {
         emit(const AuthenticationState());
+        return;
+      } else if (user.userType == UserType.anonymous) {
+        emit(
+          AuthenticationState(
+            user: user,
+          ),
+        );
         return;
       }
 

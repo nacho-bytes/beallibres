@@ -55,4 +55,7 @@ class NavigationState {
       location: const AdminRoute().location,
     ),
   ];
+
+  @override
+  String toString() => 'NavigationState{destinations: $destinations}';
 }

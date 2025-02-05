@@ -22,6 +22,13 @@ class AdaptativeNavigationDestination {
 
   /// The route location (string path).
   final String location;
+
+  @override
+  String toString() => 'AdaptativeNavigationDestination{'
+    'title: $title'
+    ', icon: $icon'
+    ', location: $location'
+  '}';
 }
 
 class AdaptiveNavigationTrail extends StatelessWidget {
@@ -34,10 +41,10 @@ class AdaptiveNavigationTrail extends StatelessWidget {
   final Widget? child;
   final List<AdaptativeNavigationDestination> destinations;
 
-  static bool _isLargeScreen(final BuildContext context) =>
+  static bool isLargeScreen(final BuildContext context) =>
     MediaQuery.of(context).size.width > 960.0;
 
-  static bool _isMediumScreen(final BuildContext context) =>
+  static bool isMediumScreen(final BuildContext context) =>
     MediaQuery.of(context).size.width > 640.0;
 
   int? _computeSelectedIndex(final BuildContext context) {
@@ -60,8 +67,8 @@ class AdaptiveNavigationTrail extends StatelessWidget {
   Widget build(final BuildContext context) {
     final int? currentIndex = _computeSelectedIndex(context);
 
-    final bool large = _isLargeScreen(context);
-    final bool medium = _isMediumScreen(context);
+    final bool large = isLargeScreen(context);
+    final bool medium = isMediumScreen(context);
     final bool small = !medium;
 
     Widget leftNav;

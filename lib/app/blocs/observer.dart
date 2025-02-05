@@ -4,9 +4,12 @@ class AppBlocObserver extends BlocObserver {
   const AppBlocObserver();
 
   @override
-  void onEvent(final Bloc<dynamic, dynamic> bloc, final Object? event) {
+  void onEvent(
+    final Bloc<dynamic, dynamic> bloc,
+    final Object? event,
+  ) {
     super.onEvent(bloc, event);
-    // print(event);
+    // print('Bloc ${bloc.runtimeType} has emitted $event');
   }
 
   @override
@@ -15,14 +18,17 @@ class AppBlocObserver extends BlocObserver {
     final Object error,
     final StackTrace stackTrace,
   ) {
-    print(error);
+    // print('Bloc ${bloc.runtimeType} has failed with $error');
     super.onError(bloc, error, stackTrace);
   }
 
   @override
-  void onChange(final BlocBase<dynamic> bloc, final Change<dynamic> change) {
+  void onChange(
+    final BlocBase<dynamic> bloc,
+    final Change<dynamic> change,
+  ) {
     super.onChange(bloc, change);
-    // print(change);
+    // print('Bloc ${bloc.runtimeType} has changed: $change');
   }
 
   @override
@@ -31,6 +37,6 @@ class AppBlocObserver extends BlocObserver {
     final Transition<dynamic, dynamic> transition,
   ) {
     super.onTransition(bloc, transition);
-    // print(transition);
+    // print('Bloc ${bloc.runtimeType} has transitioned: $transition');
   }
 }
