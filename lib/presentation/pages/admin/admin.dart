@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart'
     show BuildContext, Column, EdgeInsets, FilledButton, Padding, StatelessWidget, Text, Theme, Widget, Wrap;
+import 'package:flutter_bloc/flutter_bloc.dart' show ReadContext;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart' show AppLocalizations;
 import 'package:go_router/go_router.dart' show GoRouterHelper;
 
-import '../../../app/routes/routes.dart' show $AddUserRouteExtension, AddUserRoute;
-import '../../theme/spacing_theme_extension.dart' show SpacingThemeExtension;
+import '../../../app/app.dart' show $AddUserRouteExtension, AddUserRoute, AuthenticationBloc;
+import '../../presentation.dart' show SpacingThemeExtension;
 
 class AdminPage extends StatelessWidget {
   const AdminPage({
@@ -24,7 +25,11 @@ class AdminPage extends StatelessWidget {
           Theme.of(context).extension<SpacingThemeExtension>()!.large,
       children: <Widget>[
         Text(
-          AppLocalizations.of(context)!.helloUser('Nacho'),
+          AppLocalizations.of(context)!.helloUser(
+            context.read<AuthenticationBloc>().state.user.data.name.isEmpty
+              ? AppLocalizations.of(context)!.user
+              : context.read<AuthenticationBloc>().state.user.data.name,
+          ),
           style: Theme.of(context).textTheme.titleLarge,
         ),
         Wrap(

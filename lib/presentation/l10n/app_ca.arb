@@ -17,6 +17,11 @@
         }
     },
 
+    "user": "Usuari",
+    "@user": {
+        "description": "User"
+    },
+
     "addUser": "Afegir usuari",
     "@addUser": {
         "description": "Add user button"
