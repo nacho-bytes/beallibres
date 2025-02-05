@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart' show BuildContext, Placeholder, Widget, immutable;
+import 'package:flutter/material.dart' show BuildContext, Widget, immutable;
 import 'package:go_router/go_router.dart' show GoRouteData, GoRouterHelper, GoRouterState, RouteBase, RouteData, TypedGoRoute, TypedRoute;
 
-import '../../presentation/presentation.dart' show AddUserPage, AdminPage, BookGaleryPage, LoginPage, ProfilePage, SignUpPage;
+import '../../presentation/presentation.dart' show AddUserPage, AdminPage, BookDetailsPage, BookGaleryPage, LoginPage, ProfilePage, SignUpPage;
 
 part 'routes.g.dart';
 
@@ -11,7 +11,7 @@ part 'routes.g.dart';
   routes: <TypedRoute<RouteData>>[
     TypedGoRoute<BookDetailsRoute>(
       name: 'book-details',
-      path: 'book',
+      path: 'book-details/:isbn',
     ),
     TypedGoRoute<LoginRoute>(
       name: 'login',
@@ -119,11 +119,16 @@ class AddUserRoute extends GoRouteData {
 @immutable
 class BookDetailsRoute extends GoRouteData {
   /// Creates the book details route.
-  const BookDetailsRoute();
+  const BookDetailsRoute({
+    required this.isbn,
+  });
+
+  /// The ISBN of the book.
+  final String isbn;
 
   @override
   Widget build(
     final BuildContext context,
     final GoRouterState state,
-  ) => const Placeholder();
+  ) => BookDetailsPage(isbn: isbn);
 }

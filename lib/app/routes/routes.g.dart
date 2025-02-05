@@ -16,7 +16,7 @@ RouteBase get $homeRoute => GoRouteData.$route(
       factory: $HomeRouteExtension._fromState,
       routes: [
         GoRouteData.$route(
-          path: 'book',
+          path: 'book-details/:isbn',
           name: 'book-details',
           factory: $BookDetailsRouteExtension._fromState,
         ),
@@ -68,11 +68,12 @@ extension $HomeRouteExtension on HomeRoute {
 }
 
 extension $BookDetailsRouteExtension on BookDetailsRoute {
-  static BookDetailsRoute _fromState(GoRouterState state) =>
-      const BookDetailsRoute();
+  static BookDetailsRoute _fromState(GoRouterState state) => BookDetailsRoute(
+        isbn: state.pathParameters['isbn']!,
+      );
 
   String get location => GoRouteData.$location(
-        '/book',
+        '/book-details/${Uri.encodeComponent(isbn)}',
       );
 
   void go(BuildContext context) => context.go(location);

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart' show Card, CircularProgressIndicator, InkWell, ListTile, Theme;
 import 'package:flutter/widgets.dart'
-    show Align, Alignment, Axis, BorderRadius, BoxFit, BuildContext, Center, Clip, ClipRRect, CrossAxisAlignment, EdgeInsets, Flex, Flexible, GridView, Image, ImageChunkEvent, Padding, ScrollController, SliverGridDelegateWithMaxCrossAxisExtent, State, StatefulWidget, StatelessWidget, Text, Widget;
+    show Align, Alignment, Axis, BorderRadius, BoxFit, BuildContext, Center, Clip, ClipRRect, CrossAxisAlignment, EdgeInsets, Flex, Flexible, GridView, Hero, Image, ImageChunkEvent, Padding, ScrollController, SliverGridDelegateWithMaxCrossAxisExtent, State, StatefulWidget, StatelessWidget, Text, Widget;
 import 'package:flutter_bloc/flutter_bloc.dart'
     show BlocBuilder, BlocListener, BlocProvider, ReadContext;
+import 'package:go_router/go_router.dart' show GoRouterHelper;
 
-import '../../../app/app.dart' show AuthenticationBloc, AuthenticationState, UserType;
+import '../../../app/app.dart' show $BookDetailsRouteExtension, AuthenticationBloc, AuthenticationState, Book, BookDetailsRoute, UserType;
 import '../../../domain/domain.dart' show BooksRepository;
 import '../../presentation.dart' show AdaptiveNavigationTrail;
 import 'home_bloc.dart' show HomeBloc, HomeFetchBooksEvent, HomeState;
@@ -96,11 +97,8 @@ class _BookGaleryPageState extends State<BookGaleryPage> {
             itemBuilder: (
               final BuildContext context,
               final int index,
-            ) =>
-                BookCard(
-              title: state.books[index].title,
-              author: state.books[index].author,
-              imageUrl: state.books[index].imageUrl,
+            ) => BookCard(
+              book: state.books[index],
             ),
           );
         },
@@ -112,16 +110,10 @@ class _BookGaleryPageState extends State<BookGaleryPage> {
 class BookCard extends StatelessWidget {
   const BookCard({
     super.key,
-    final String? title,
-    final String? author,
-    final String? imageUrl,
-  })  : title = title ?? '',
-        author = author ?? '',
-        imageUrl = imageUrl;
+    required this.book,
+  });
 
-  final String title;
-  final String author;
-  final String? imageUrl;
+  final Book book;
 
   @override
   Widget build(final BuildContext context) {
@@ -129,7 +121,7 @@ class BookCard extends StatelessWidget {
     return Card(
       clipBehavior: Clip.hardEdge,
       child: InkWell(
-        onTap: () {}, // TODO - Navigate to book details page
+        onTap: () => context.go(BookDetailsRoute(isbn: book.isbn).location),
         splashColor: Theme.of(context).colorScheme.secondary.withAlpha(100),
         child: Padding(
           padding: const EdgeInsets.all(8),
@@ -140,25 +132,28 @@ class BookCard extends StatelessWidget {
               Flexible(
                 flex: isLargeScreen ? 1 : 2,
                 child: Center(
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: imageUrl != null
-                      ? Image.network(
-                        imageUrl!,
-                        // fit: BoxFit.cover,
-                        fit: isLargeScreen ? BoxFit.cover : BoxFit.contain,
-                        loadingBuilder: (
-                          final BuildContext context,
-                          final Widget child,
-                          final ImageChunkEvent? loadingProgress,
-                        ) => loadingProgress == null
-                          ? child
-                          : const Center(child: CircularProgressIndicator()),
-                      )
-                      : Image.asset(
-                        'assets/images/book-cover-placeholder.png',
-                        fit: BoxFit.cover,
-                      ),
+                  child: Hero(
+                    tag: 'cover-${book.isbn}',
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: book.imageUrl.isNotEmpty
+                        ? Image.network(
+                          book.imageUrl,
+                          // fit: BoxFit.cover,
+                          fit: isLargeScreen ? BoxFit.cover : BoxFit.contain,
+                          loadingBuilder: (
+                            final BuildContext context,
+                            final Widget child,
+                            final ImageChunkEvent? loadingProgress,
+                          ) => loadingProgress == null
+                            ? child
+                            : const Center(child: CircularProgressIndicator()),
+                        )
+                        : Image.asset(
+                          'assets/images/book-cover-placeholder.png',
+                          fit: BoxFit.cover,
+                        ),
+                    ),
                   ),
                 ),
               ),
@@ -169,8 +164,8 @@ class BookCard extends StatelessWidget {
                       ? const Alignment(0, -1 / 3)
                       : Alignment.center,
                   child: ListTile(
-                    title: Text(title),
-                    subtitle: Text(author),
+                    title: Text(book.title),
+                    subtitle: Text(book.author),
                   ),
                 ),
               ),
