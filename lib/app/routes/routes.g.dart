@@ -7,48 +7,58 @@ part of 'routes.dart';
 // **************************************************************************
 
 List<RouteBase> get $appRoutes => [
-      $homeRoute,
+      $shellNavigationRoute,
     ];
 
-RouteBase get $homeRoute => GoRouteData.$route(
-      path: '/',
-      name: 'home',
-      factory: $HomeRouteExtension._fromState,
+RouteBase get $shellNavigationRoute => ShellRouteData.$route(
+      factory: $ShellNavigationRouteExtension._fromState,
       routes: [
         GoRouteData.$route(
-          path: 'book-details/:isbn',
-          name: 'book-details',
-          factory: $BookDetailsRouteExtension._fromState,
-        ),
-        GoRouteData.$route(
-          path: 'login',
-          name: 'login',
-          factory: $LoginRouteExtension._fromState,
-        ),
-        GoRouteData.$route(
-          path: 'singup',
-          name: 'singup',
-          factory: $SignUpRouteExtension._fromState,
-        ),
-        GoRouteData.$route(
-          path: 'profile',
-          name: 'profile',
-          factory: $ProfileRouteExtension._fromState,
-        ),
-        GoRouteData.$route(
-          path: 'admin',
-          name: 'admin',
-          factory: $AdminRouteExtension._fromState,
+          path: '/',
+          name: 'home',
+          factory: $HomeRouteExtension._fromState,
           routes: [
             GoRouteData.$route(
-              path: 'add-user',
-              name: 'add-user',
-              factory: $AddUserRouteExtension._fromState,
+              path: 'book-details/:isbn',
+              name: 'book-details',
+              factory: $BookDetailsRouteExtension._fromState,
+            ),
+            GoRouteData.$route(
+              path: 'login',
+              name: 'login',
+              factory: $LoginRouteExtension._fromState,
+            ),
+            GoRouteData.$route(
+              path: 'singup',
+              name: 'singup',
+              factory: $SignUpRouteExtension._fromState,
+            ),
+            GoRouteData.$route(
+              path: 'profile',
+              name: 'profile',
+              factory: $ProfileRouteExtension._fromState,
+            ),
+            GoRouteData.$route(
+              path: 'admin',
+              name: 'admin',
+              factory: $AdminRouteExtension._fromState,
+              routes: [
+                GoRouteData.$route(
+                  path: 'add-user',
+                  name: 'add-user',
+                  factory: $AddUserRouteExtension._fromState,
+                ),
+              ],
             ),
           ],
         ),
       ],
     );
+
+extension $ShellNavigationRouteExtension on ShellNavigationRoute {
+  static ShellNavigationRoute _fromState(GoRouterState state) =>
+      const ShellNavigationRoute();
+}
 
 extension $HomeRouteExtension on HomeRoute {
   static HomeRoute _fromState(GoRouterState state) => const HomeRoute();

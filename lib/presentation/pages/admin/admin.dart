@@ -14,8 +14,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart'
     show AppLocalizations;
 import 'package:go_router/go_router.dart' show GoRouterHelper;
 
-import '../../../app/app.dart'
-    show $AddUserRouteExtension, AddUserRoute;
+import '../../../app/app.dart' show $AddUserRouteExtension, AddUserRoute;
 import '../../presentation.dart' show SpacingThemeExtension;
 
 class AdminPage extends StatelessWidget {

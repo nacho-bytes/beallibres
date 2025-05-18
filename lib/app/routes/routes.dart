@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' show BuildContext, Widget, immutable;
+import 'package:flutter_bloc/flutter_bloc.dart' show BlocBuilder;
 import 'package:go_router/go_router.dart'
     show
         GoRouteData,
@@ -6,11 +7,14 @@ import 'package:go_router/go_router.dart'
         GoRouterState,
         RouteBase,
         RouteData,
+        ShellRouteData,
         TypedGoRoute,
-        TypedRoute;
+        TypedRoute,
+        TypedShellRoute;
 
 import '../../presentation/presentation.dart'
     show
+        AdaptiveNavigationTrail,
         AddUserPage,
         AdminPage,
         BookDetailsPage,
@@ -18,41 +22,71 @@ import '../../presentation/presentation.dart'
         LoginPage,
         ProfilePage,
         SignUpPage;
+import '../blocs/navigation/navigation_bloc.dart'
+    show NavigationBloc, NavigationState;
 
 part 'routes.g.dart';
 
-@TypedGoRoute<HomeRoute>(
-  name: 'home',
-  path: '/',
+@TypedShellRoute<ShellNavigationRoute>(
   routes: <TypedRoute<RouteData>>[
-    TypedGoRoute<BookDetailsRoute>(
-      name: 'book-details',
-      path: 'book-details/:isbn',
-    ),
-    TypedGoRoute<LoginRoute>(
-      name: 'login',
-      path: 'login',
-    ),
-    TypedGoRoute<SignUpRoute>(
-      name: 'singup',
-      path: 'singup',
-    ),
-    TypedGoRoute<ProfileRoute>(
-      name: 'profile',
-      path: 'profile',
-    ),
-    TypedGoRoute<AdminRoute>(
-      name: 'admin',
-      path: 'admin',
+    TypedGoRoute<HomeRoute>(
+      name: 'home',
+      path: '/',
       routes: <TypedRoute<RouteData>>[
-        TypedGoRoute<AddUserRoute>(
-          name: 'add-user',
-          path: 'add-user',
+        TypedGoRoute<BookDetailsRoute>(
+          name: 'book-details',
+          path: 'book-details/:isbn',
+        ),
+        TypedGoRoute<LoginRoute>(
+          name: 'login',
+          path: 'login',
+        ),
+        TypedGoRoute<SignUpRoute>(
+          name: 'singup',
+          path: 'singup',
+        ),
+        TypedGoRoute<ProfileRoute>(
+          name: 'profile',
+          path: 'profile',
+        ),
+        TypedGoRoute<AdminRoute>(
+          name: 'admin',
+          path: 'admin',
+          routes: <TypedRoute<RouteData>>[
+            TypedGoRoute<AddUserRoute>(
+              name: 'add-user',
+              path: 'add-user',
+            ),
+          ],
         ),
       ],
     ),
   ],
 )
+
+/// The root shell route that provides navigation scaffold
+@immutable
+class ShellNavigationRoute extends ShellRouteData {
+  /// Creates the shell navigation route.
+  const ShellNavigationRoute();
+
+  @override
+  Widget builder(
+    final BuildContext context,
+    final GoRouterState state,
+    final Widget navigator,
+  ) =>
+      BlocBuilder<NavigationBloc, NavigationState>(
+        builder: (
+          final BuildContext context,
+          final NavigationState navigationState,
+        ) =>
+            AdaptiveNavigationTrail(
+          destinations: navigationState.destinations(context),
+          child: navigator,
+        ),
+      );
+}
 
 /// The home route.
 @immutable

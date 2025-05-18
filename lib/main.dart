@@ -12,7 +12,6 @@ import 'package:flutter/material.dart'
 import 'package:flutter_bloc/flutter_bloc.dart'
     show
         Bloc,
-        BlocBuilder,
         BlocListener,
         BlocProvider,
         MultiBlocProvider,
@@ -21,8 +20,7 @@ import 'package:flutter_bloc/flutter_bloc.dart'
         RepositoryProvider;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart'
     show AppLocalizations;
-import 'package:go_router/go_router.dart'
-    show GoRouter, GoRouterState, RouteBase, ShellRoute;
+import 'package:go_router/go_router.dart' show GoRouter;
 import 'package:nested/nested.dart' show SingleChildWidget;
 
 import 'app/app.dart'
@@ -35,13 +33,11 @@ import 'app/app.dart'
         AuthenticationSubscriptionRequested,
         HomeRoute,
         NavigationBloc,
-        NavigationNewUserTypeEvent,
-        NavigationState;
+        NavigationNewUserTypeEvent;
 import 'domain/domain.dart'
     show AuthenticationRepository, BooksRepository, UsersRepository;
 import 'firebase_options.dart' show DefaultFirebaseOptions;
-import 'presentation/presentation.dart'
-    show AdaptiveNavigationTrail, SpacingThemeExtension;
+import 'presentation/presentation.dart' show SpacingThemeExtension;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -107,75 +103,52 @@ class App extends StatelessWidget {
                 usersRepository: context.read<UsersRepository>(),
               )..add(const AuthenticationSubscriptionRequested()),
             ),
-          ],
-          child: MaterialApp.router(
-            theme: ThemeData(
-              extensions: const <ThemeExtension<dynamic>>[
-                SpacingThemeExtension(
-                  small: 4,
-                  medium: 8,
-                  large: 16,
-                ),
-              ],
-            ),
-            routerConfig: GoRouter(
-              initialLocation: const HomeRoute().location,
-              routes: <RouteBase>[
-                ShellRoute(
-                  builder: (
-                    final BuildContext context,
-                    final GoRouterState routerState,
-                    final Widget child,
-                  ) =>
-                      BlocProvider<NavigationBloc>(
-                    create: (final BuildContext context) => NavigationBloc()
-                      ..add(
-                        NavigationNewUserTypeEvent(
-                          type: context
-                              .read<AuthenticationBloc>()
-                              .state
-                              .user
-                              ?.userType,
-                        ),
-                      ),
-                    child:
-                        BlocListener<AuthenticationBloc, AuthenticationState>(
-                      listenWhen: (
-                        final AuthenticationState previous,
-                        final AuthenticationState current,
-                      ) =>
-                          current.user != null &&
-                          previous.user?.userType != current.user?.userType,
-                      listener: (
-                        final BuildContext context,
-                        final AuthenticationState authenticationState,
-                      ) {
-                        context.read<NavigationBloc>().add(
-                              NavigationNewUserTypeEvent(
-                                type: authenticationState.user!.userType,
-                              ),
-                            );
-                      },
-                      child: BlocBuilder<NavigationBloc, NavigationState>(
-                        builder: (
-                          final BuildContext context,
-                          final NavigationState navigationState,
-                        ) =>
-                            AdaptiveNavigationTrail(
-                          destinations: navigationState.destinations(context),
-                          child: child,
-                        ),
-                      ),
-                    ),
+            BlocProvider<NavigationBloc>(
+              create: (final BuildContext context) => NavigationBloc()
+                ..add(
+                  NavigationNewUserTypeEvent(
+                    type:
+                        context.read<AuthenticationBloc>().state.user?.userType,
                   ),
-                  routes: $appRoutes,
                 ),
-              ],
             ),
-            onGenerateTitle: (final BuildContext context) =>
-                AppLocalizations.of(context)!.appTitle,
-            localizationsDelegates: AppLocalizations.localizationsDelegates,
-            supportedLocales: AppLocalizations.supportedLocales,
+          ],
+          child: BlocListener<AuthenticationBloc, AuthenticationState>(
+            listenWhen: (
+              final AuthenticationState previous,
+              final AuthenticationState current,
+            ) =>
+                current.user != null &&
+                previous.user?.userType != current.user?.userType,
+            listener: (
+              final BuildContext context,
+              final AuthenticationState authenticationState,
+            ) {
+              context.read<NavigationBloc>().add(
+                    NavigationNewUserTypeEvent(
+                      type: authenticationState.user!.userType,
+                    ),
+                  );
+            },
+            child: MaterialApp.router(
+              theme: ThemeData(
+                extensions: const <ThemeExtension<dynamic>>[
+                  SpacingThemeExtension(
+                    small: 4,
+                    medium: 8,
+                    large: 16,
+                  ),
+                ],
+              ),
+              routerConfig: GoRouter(
+                initialLocation: const HomeRoute().location,
+                routes: $appRoutes,
+              ),
+              onGenerateTitle: (final BuildContext context) =>
+                  AppLocalizations.of(context)!.appTitle,
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales,
+            ),
           ),
         ),
       );
