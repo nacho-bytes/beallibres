@@ -60,5 +60,6 @@ class AuthenticationBloc
     final Emitter<AuthenticationState> emit,
   ) async {
     await _authenticationRepository.logOut();
+    await _authenticationRepository.logInAnonymously();
   }
 }
