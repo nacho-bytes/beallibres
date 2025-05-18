@@ -205,5 +205,20 @@
     "signUpError": "Error de registre",
     "@signUpError": {
         "description": "Signup error"
+    },
+
+    "users": "Usuaris",
+    "@users": {
+        "description": "Users"
+    },
+    
+    "books": "Llibres",
+    "@books": {
+        "description": "Books"
+    },
+
+    "lendings": "Préstecs",
+    "@lendings": {
+        "description": "Lendings"
     }
 }

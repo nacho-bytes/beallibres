@@ -15,7 +15,6 @@ import 'package:go_router/go_router.dart'
 import '../../presentation/presentation.dart'
     show
         AdaptiveNavigationTrail,
-        AddUserPage,
         AdminPage,
         BookDetailsPage,
         BookGaleryPage,
@@ -52,12 +51,6 @@ part 'routes.g.dart';
         TypedGoRoute<AdminRoute>(
           name: 'admin',
           path: 'admin',
-          routes: <TypedRoute<RouteData>>[
-            TypedGoRoute<AddUserRoute>(
-              name: 'add-user',
-              path: 'add-user',
-            ),
-          ],
         ),
       ],
     ),
@@ -156,20 +149,6 @@ class AdminRoute extends GoRouteData {
     final GoRouterState state,
   ) =>
       const AdminPage();
-}
-
-/// The add user route.
-@immutable
-class AddUserRoute extends GoRouteData {
-  /// Creates the add user route.
-  const AddUserRoute();
-
-  @override
-  Widget build(
-    final BuildContext context,
-    final GoRouterState state,
-  ) =>
-      const AddUserPage();
 }
 
 /// The book details route.

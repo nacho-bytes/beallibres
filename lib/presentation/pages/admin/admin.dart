@@ -1,20 +1,27 @@
-import 'package:flutter/material.dart'
+import 'package:flutter/material.dart' show ElevatedButton, Icons, Theme;
+import 'package:flutter/widgets.dart'
     show
+        Align,
+        Alignment,
+        BorderRadius,
+        BoxFit,
         BuildContext,
-        Column,
         EdgeInsets,
-        FilledButton,
+        FittedBox,
+        FractionallySizedBox,
+        GridView,
+        Icon,
+        IconData,
         Padding,
+        RoundedRectangleBorder,
+        Stack,
         StatelessWidget,
         Text,
-        Theme,
-        Widget,
-        Wrap;
+        VoidCallback,
+        Widget;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart'
     show AppLocalizations;
-import 'package:go_router/go_router.dart' show GoRouterHelper;
 
-import '../../../app/app.dart' show $AddUserRouteExtension, AddUserRoute;
 import '../../presentation.dart' show SpacingThemeExtension;
 
 class AdminPage extends StatelessWidget {
@@ -30,64 +37,87 @@ class AdminPage extends StatelessWidget {
           vertical:
               Theme.of(context).extension<SpacingThemeExtension>()!.medium,
         ),
-        child: Column(
-          spacing: Theme.of(context).extension<SpacingThemeExtension>()!.large,
+        child: GridView.extent(
+          maxCrossAxisExtent: 200,
+          crossAxisSpacing:
+              Theme.of(context).extension<SpacingThemeExtension>()!.medium,
+          mainAxisSpacing:
+              Theme.of(context).extension<SpacingThemeExtension>()!.medium,
           children: <Widget>[
-            Wrap(
-              spacing:
-                  Theme.of(context).extension<SpacingThemeExtension>()!.small,
-              runSpacing:
-                  Theme.of(context).extension<SpacingThemeExtension>()!.medium,
-              children: <Widget>[
-                FilledButton(
-                  onPressed: () => context.go(const AddUserRoute().location),
-                  child: Text(
-                    AppLocalizations.of(context)!.addUser,
+            _IconCard(
+              title: AppLocalizations.of(context)!.users,
+              icon: Icons.person,
+              onPressed: () {},
+            ),
+            _IconCard(
+              title: AppLocalizations.of(context)!.books,
+              icon: Icons.menu_book,
+              onPressed: () {},
+            ),
+            _IconCard(
+              title: AppLocalizations.of(context)!.lendings,
+              icon: Icons.bookmarks,
+              onPressed: () {},
+            ),
+          ],
+        ),
+      );
+}
+
+class _IconCard extends StatelessWidget {
+  const _IconCard({
+    required this.title,
+    required this.icon,
+    required this.onPressed,
+  });
+
+  final String title;
+  final IconData icon;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(final BuildContext context) => ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(
+              Theme.of(context).extension<SpacingThemeExtension>()!.medium,
+            ),
+          ),
+        ),
+        child: Stack(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(
+                left: Theme.of(context)
+                    .extension<SpacingThemeExtension>()!
+                    .medium,
+                top: Theme.of(context)
+                    .extension<SpacingThemeExtension>()!
+                    .medium,
+              ),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  title,
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: FractionallySizedBox(
+                heightFactor: 0.8,
+                widthFactor: 0.8,
+                child: FittedBox(
+                  fit: BoxFit.fitWidth,
+                  child: Icon(
+                    icon,
+                    color:
+                        Theme.of(context).colorScheme.onSurface.withAlpha(100),
                   ),
                 ),
-                FilledButton(
-                  onPressed: () {},
-                  child: Text(
-                    AppLocalizations.of(context)!.removeUser,
-                  ),
-                ),
-                FilledButton(
-                  onPressed: () {},
-                  child: Text(
-                    AppLocalizations.of(context)!.addBook,
-                  ),
-                ),
-                FilledButton(
-                  onPressed: () {},
-                  child: Text(
-                    AppLocalizations.of(context)!.removeBook,
-                  ),
-                ),
-                FilledButton(
-                  onPressed: () {},
-                  child: Text(
-                    AppLocalizations.of(context)!.addLending,
-                  ),
-                ),
-                FilledButton(
-                  onPressed: () {},
-                  child: Text(
-                    AppLocalizations.of(context)!.endLending,
-                  ),
-                ),
-                FilledButton(
-                  onPressed: () {},
-                  child: Text(
-                    AppLocalizations.of(context)!.renewLending,
-                  ),
-                ),
-                FilledButton(
-                  onPressed: () {},
-                  child: Text(
-                    AppLocalizations.of(context)!.consultLendings,
-                  ),
-                ),
-              ],
+              ),
             ),
           ],
         ),

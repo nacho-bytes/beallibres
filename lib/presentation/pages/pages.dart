@@ -1,5 +1,4 @@
 export 'adaptative_navigation_trail.dart';
-export 'add_user/add_user.dart';
 export 'admin/admin.dart';
 export 'book_details/book_details.dart';
 export 'home/home.dart';
