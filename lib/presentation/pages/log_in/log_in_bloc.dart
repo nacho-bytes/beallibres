@@ -6,7 +6,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart'
 import 'package:formz/formz.dart' show Formz, FormzInput, FormzSubmissionStatus;
 
 import '../../../app/app.dart' show Email, Password;
-import '../../../domain/domain.dart' show AuthenticationRepository, LogInWithEmailAndPasswordFailure;
+import '../../../domain/domain.dart'
+    show AuthenticationRepository, LogInWithEmailAndPasswordFailure;
 
 part 'log_in_state.dart';
 part 'log_in_event.dart';
@@ -14,7 +15,7 @@ part 'log_in_event.dart';
 class LogInBloc extends Bloc<LogInEvent, LogInState> {
   LogInBloc({
     required final AuthenticationRepository authenticationRepository,
-  }) :  _authenticationRepository = authenticationRepository,
+  })  : _authenticationRepository = authenticationRepository,
         super(const LogInState()) {
     on<LogInEmailChanged>(_onEmailChanged);
     on<LogInPasswordChanged>(_onPasswordChanged);

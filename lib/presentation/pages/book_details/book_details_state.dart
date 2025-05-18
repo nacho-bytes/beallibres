@@ -15,10 +15,11 @@ final class BookDetailsState extends Equatable {
   BookDetailsState copyWith({
     final Book? book,
     final bool? isLoading,
-  }) => BookDetailsState(
-    book: book ?? this.book,
-    isLoading: isLoading ?? this.isLoading,
-  );
+  }) =>
+      BookDetailsState(
+        book: book ?? this.book,
+        isLoading: isLoading ?? this.isLoading,
+      );
 
   @override
   String toString() => 'BookState { book: $book }';

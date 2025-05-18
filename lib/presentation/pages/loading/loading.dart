@@ -1,4 +1,12 @@
-import 'package:flutter/material.dart' show BuildContext, Center, CircularProgressIndicator, ColoredBox, StatelessWidget, Theme, Widget;
+import 'package:flutter/material.dart'
+    show
+        BuildContext,
+        Center,
+        CircularProgressIndicator,
+        ColoredBox,
+        StatelessWidget,
+        Theme,
+        Widget;
 
 class LoadingPage extends StatelessWidget {
   const LoadingPage({
@@ -7,9 +15,9 @@ class LoadingPage extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) => ColoredBox(
-    color: Theme.of(context).scaffoldBackgroundColor,
-    child: const Center(
-      child: CircularProgressIndicator(),
-    ),
-  );
+        color: Theme.of(context).scaffoldBackgroundColor,
+        child: const Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
 }

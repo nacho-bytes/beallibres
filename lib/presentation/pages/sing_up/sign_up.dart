@@ -12,7 +12,8 @@ import 'package:flutter/widgets.dart'
         StatelessWidget,
         Text,
         Widget;
-import 'package:flutter_bloc/flutter_bloc.dart' show BlocBuilder, BlocProvider, ReadContext;
+import 'package:flutter_bloc/flutter_bloc.dart'
+    show BlocBuilder, BlocProvider, ReadContext;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart'
     show AppLocalizations;
 
@@ -28,93 +29,94 @@ class SignUpPage extends StatelessWidget {
 
   @override
   Widget build(final BuildContext context) => BlocProvider<SignUpBloc>(
-    create: (final BuildContext context) => SignUpBloc(),
-    child: BlocBuilder<SignUpBloc, SignUpState>(
-      builder: (
-        final BuildContext context,
-        final SignUpState signUpState,
-      ) => Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal:
-              Theme.of(context).extension<SpacingThemeExtension>()!.large,
-          vertical:
-              Theme.of(context).extension<SpacingThemeExtension>()!.medium,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          spacing:
-              Theme.of(context).extension<SpacingThemeExtension>()!.large,
-          children: <Widget>[
-            Text(
-              AppLocalizations.of(context)!.hello,
-              style: Theme.of(context).textTheme.titleLarge,
+        create: (final BuildContext context) => SignUpBloc(),
+        child: BlocBuilder<SignUpBloc, SignUpState>(
+          builder: (
+            final BuildContext context,
+            final SignUpState signUpState,
+          ) =>
+              Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal:
+                  Theme.of(context).extension<SpacingThemeExtension>()!.large,
+              vertical:
+                  Theme.of(context).extension<SpacingThemeExtension>()!.medium,
             ),
-            Form(
-              key: signUpState.formKey,
-              child: Column(
-                spacing: Theme.of(context)
-                    .extension<SpacingThemeExtension>()!
-                    .medium,
-                children: <Widget>[
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: AppLocalizations.of(context)!.name,
-                    ),
-                    controller: signUpState.nameController,
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: AppLocalizations.of(context)!.email,
-                    ),
-                    controller: signUpState.emailController,
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: AppLocalizations.of(context)!.confirmEmail,
-                    ),
-                    controller: signUpState.confirmEmailController,
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: AppLocalizations.of(context)!.password,
-                    ),
-                    obscureText: true,
-                    controller: signUpState.passwordController,
-                  ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText:
-                          AppLocalizations.of(context)!.confirmPassword,
-                    ),
-                    obscureText: true,
-                    controller: signUpState.confirmPasswordController,
-                  ),
-                ],
-              ),
-            ),
-            Row(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              spacing: Theme.of(context)
-                  .extension<SpacingThemeExtension>()!
-                  .medium,
+              spacing:
+                  Theme.of(context).extension<SpacingThemeExtension>()!.large,
               children: <Widget>[
-                FilledButton(
-                  onPressed: () => context.read<SignUpBloc>().add(
-                        SignUpSignUpEvent(
-                          name: signUpState.nameController.text,
-                          email: signUpState.emailController.text,
-                          password: signUpState.passwordController.text,
+                Text(
+                  AppLocalizations.of(context)!.hello,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
+                Form(
+                  key: signUpState.formKey,
+                  child: Column(
+                    spacing: Theme.of(context)
+                        .extension<SpacingThemeExtension>()!
+                        .medium,
+                    children: <Widget>[
+                      TextFormField(
+                        decoration: InputDecoration(
+                          labelText: AppLocalizations.of(context)!.name,
                         ),
+                        controller: signUpState.nameController,
                       ),
-                  child: Text(
-                    AppLocalizations.of(context)!.signUp,
+                      TextFormField(
+                        decoration: InputDecoration(
+                          labelText: AppLocalizations.of(context)!.email,
+                        ),
+                        controller: signUpState.emailController,
+                      ),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          labelText: AppLocalizations.of(context)!.confirmEmail,
+                        ),
+                        controller: signUpState.confirmEmailController,
+                      ),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          labelText: AppLocalizations.of(context)!.password,
+                        ),
+                        obscureText: true,
+                        controller: signUpState.passwordController,
+                      ),
+                      TextFormField(
+                        decoration: InputDecoration(
+                          labelText:
+                              AppLocalizations.of(context)!.confirmPassword,
+                        ),
+                        obscureText: true,
+                        controller: signUpState.confirmPasswordController,
+                      ),
+                    ],
                   ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  spacing: Theme.of(context)
+                      .extension<SpacingThemeExtension>()!
+                      .medium,
+                  children: <Widget>[
+                    FilledButton(
+                      onPressed: () => context.read<SignUpBloc>().add(
+                            SignUpSignUpEvent(
+                              name: signUpState.nameController.text,
+                              email: signUpState.emailController.text,
+                              password: signUpState.passwordController.text,
+                            ),
+                          ),
+                      child: Text(
+                        AppLocalizations.of(context)!.signUp,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
-          ],
+          ),
         ),
-      ),
-    ),
-  );
+      );
 }

@@ -1,7 +1,23 @@
 import 'package:flutter/material.dart' show BuildContext, Widget, immutable;
-import 'package:go_router/go_router.dart' show GoRouteData, GoRouterHelper, GoRouterState, RouteBase, RouteData, TypedGoRoute, TypedRoute;
+import 'package:go_router/go_router.dart'
+    show
+        GoRouteData,
+        GoRouterHelper,
+        GoRouterState,
+        RouteBase,
+        RouteData,
+        TypedGoRoute,
+        TypedRoute;
 
-import '../../presentation/presentation.dart' show AddUserPage, AdminPage, BookDetailsPage, BookGaleryPage, LoginPage, ProfilePage, SignUpPage;
+import '../../presentation/presentation.dart'
+    show
+        AddUserPage,
+        AdminPage,
+        BookDetailsPage,
+        BookGaleryPage,
+        LoginPage,
+        ProfilePage,
+        SignUpPage;
 
 part 'routes.g.dart';
 
@@ -37,6 +53,7 @@ part 'routes.g.dart';
     ),
   ],
 )
+
 /// The home route.
 @immutable
 class HomeRoute extends GoRouteData {
@@ -47,7 +64,8 @@ class HomeRoute extends GoRouteData {
   Widget build(
     final BuildContext context,
     final GoRouterState state,
-  ) => const BookGaleryPage();
+  ) =>
+      const BookGaleryPage();
 }
 
 /// The login route.
@@ -60,7 +78,8 @@ class LoginRoute extends GoRouteData {
   Widget build(
     final BuildContext context,
     final GoRouterState state,
-  ) => const LoginPage();
+  ) =>
+      const LoginPage();
 }
 
 /// The register route.
@@ -73,7 +92,8 @@ class SignUpRoute extends GoRouteData {
   Widget build(
     final BuildContext context,
     final GoRouterState state,
-  ) => const SignUpPage();
+  ) =>
+      const SignUpPage();
 }
 
 /// The profile route.
@@ -86,7 +106,8 @@ class ProfileRoute extends GoRouteData {
   Widget build(
     final BuildContext context,
     final GoRouterState state,
-  ) => const ProfilePage();
+  ) =>
+      const ProfilePage();
 }
 
 /// The admin route.
@@ -99,7 +120,8 @@ class AdminRoute extends GoRouteData {
   Widget build(
     final BuildContext context,
     final GoRouterState state,
-  ) => const AdminPage();
+  ) =>
+      const AdminPage();
 }
 
 /// The add user route.
@@ -112,7 +134,8 @@ class AddUserRoute extends GoRouteData {
   Widget build(
     final BuildContext context,
     final GoRouterState state,
-  ) => const AddUserPage();
+  ) =>
+      const AddUserPage();
 }
 
 /// The book details route.
@@ -130,5 +153,6 @@ class BookDetailsRoute extends GoRouteData {
   Widget build(
     final BuildContext context,
     final GoRouterState state,
-  ) => BookDetailsPage(isbn: isbn);
+  ) =>
+      BookDetailsPage(isbn: isbn);
 }

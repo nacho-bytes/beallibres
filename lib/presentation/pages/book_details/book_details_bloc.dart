@@ -10,7 +10,7 @@ part 'book_details_event.dart';
 class BookDetailsBloc extends Bloc<BookDetailsEvent, BookDetailsState> {
   BookDetailsBloc({
     required final BooksRepository booksRepository,
-  }) :  _booksRepository = booksRepository,
+  })  : _booksRepository = booksRepository,
         super(const BookDetailsState()) {
     on<BookDetailsGetBookEvent>(_onGetBook);
   }

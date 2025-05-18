@@ -13,14 +13,15 @@ class Book extends Equatable {
   factory Book.fromMap(
     final Map<String, dynamic> data,
     final String documentId,
-  ) => Book(
-    isbn: documentId,
-    author: data[authorString] as String? ?? '',
-    description: data[descriptionString] as String? ?? '',
-    imageUrl: data[imageUrlString] as String? ?? '',
-    language: data[languageString] as String? ?? '',
-    title: data[titleString] as String? ?? '',
-  );
+  ) =>
+      Book(
+        isbn: documentId,
+        author: data[authorString] as String? ?? '',
+        description: data[descriptionString] as String? ?? '',
+        imageUrl: data[imageUrlString] as String? ?? '',
+        language: data[languageString] as String? ?? '',
+        title: data[titleString] as String? ?? '',
+      );
 
   static const String authorString = 'author';
   static const String descriptionString = 'description';
@@ -36,23 +37,24 @@ class Book extends Equatable {
   final String title;
 
   Map<String, dynamic> toMap() => <String, dynamic>{
-    authorString: author,
-    descriptionString: description,
-    imageUrlString: imageUrl,
-    languageString: language,
-    titleString: title,
-  };
+        authorString: author,
+        descriptionString: description,
+        imageUrlString: imageUrl,
+        languageString: language,
+        titleString: title,
+      };
 
   @override
-  List<Object?> get props => <Object?>[isbn, author, description, imageUrl, language, title];
+  List<Object?> get props =>
+      <Object?>[isbn, author, description, imageUrl, language, title];
 
   @override
   String toString() => 'Book{'
-    'isbn: $isbn'
-    ', $authorString: $author'
-    ', $descriptionString: $description'
-    ', $imageUrlString: $imageUrl'
-    ', $languageString: $language'
-    ', $titleString: $title'
-  '}';
+      'isbn: $isbn'
+      ', $authorString: $author'
+      ', $descriptionString: $description'
+      ', $imageUrlString: $imageUrl'
+      ', $languageString: $language'
+      ', $titleString: $title'
+      '}';
 }

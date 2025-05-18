@@ -5,8 +5,8 @@ import 'package:flutter/foundation.dart' show kIsWeb, visibleForTesting;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart'
     show AppLocalizations;
 
-import '../../app/app.dart' show CacheClient;
-import '../../app/models/models.dart' show User;
+import '../../app/models/models.dart' show User, UserData;
+import 'repositories.dart' show UsersRepository;
 
 /// Thrown during the sign up process if a failure occurs.
 /// https://pub.dev/documentation/firebase_auth/latest/firebase_auth/FirebaseAuth/createUserWithEmailAndPassword.html
@@ -36,6 +36,9 @@ class SignUpWithEmailAndPasswordFailure implements Exception {
 
   /// The error code.
   final String code;
+
+  @override
+  String toString() => code;
 }
 
 /// Thrown during the login process if a failure occurs.
@@ -64,6 +67,9 @@ class LogInWithEmailAndPasswordFailure implements Exception {
 
   // The error code
   final String code;
+
+  @override
+  String toString() => code;
 }
 
 /// Thrown during the anonymous sign in process if a failure occurs.
@@ -86,6 +92,9 @@ class AnonymousSignInFailure implements Exception {
 
   /// El código de error.
   final String code;
+
+  @override
+  String toString() => code;
 }
 
 /// Thrown during the logout process if a failure occurs.
@@ -94,13 +103,13 @@ class LogOutFailure implements Exception {}
 /// Repository which manages user authentication.
 class AuthenticationRepository {
   AuthenticationRepository({
-    final CacheClient? cache,
     final firebase_auth.FirebaseAuth? firebaseAuth,
-  })  : _cache = cache ?? CacheClient(),
-        _firebaseAuth = firebaseAuth ?? firebase_auth.FirebaseAuth.instance;
+    required final UsersRepository usersRepository,
+  })  : _firebaseAuth = firebaseAuth ?? firebase_auth.FirebaseAuth.instance,
+        _usersRepository = usersRepository;
 
-  final CacheClient _cache;
   final firebase_auth.FirebaseAuth _firebaseAuth;
+  final UsersRepository _usersRepository;
 
   /// Whether or not the current environment is web
   /// Should only be overridden for testing purposes. Otherwise,
@@ -108,26 +117,24 @@ class AuthenticationRepository {
   @visibleForTesting
   bool isWeb = kIsWeb;
 
-  /// User cache key.
-  /// Should only be used for testing purposes.
-  @visibleForTesting
-  static const String userCacheKey = '__user_cache_key__';
-
   /// Stream of [User] which will emit the current user when
   /// the authentication state changes.
-  ///
-  /// Emits [User.empty] if the user is not authenticated.
-  Stream<User> get user => _firebaseAuth.authStateChanges().map(
-    (final firebase_auth.User? firebaseUser) {
-      final User user = firebaseUser == null ? User.empty : firebaseUser.toUser;
-      _cache.write(key: userCacheKey, value: user);
-      return user;
-    }
-  );
+  Stream<Future<User?>> get user => _firebaseAuth.authStateChanges().map(
+        (
+          final firebase_auth.User? firebaseUser,
+        ) async =>
+            firebaseUser?.toUser(_usersRepository),
+      );
 
-  /// Returns the current cached user.
-  /// Defaults to [User.empty] if there is no cached user.
-  User get currentUser => _cache.read<User>(key: userCacheKey) ?? User.empty;
+  Future<User?> get currentUser async {
+    final User? user =
+        await _firebaseAuth.currentUser?.toUser(_usersRepository);
+    return user;
+  }
+
+  Future<void> deleteCurrentUser() async {
+    await _firebaseAuth.currentUser?.delete();
+  }
 
   /// Creates a new user with the provided [email] and [password].
   ///
@@ -135,7 +142,7 @@ class AuthenticationRepository {
   Future<void> signUp({
     required final String email,
     required final String password,
-    final String? name,
+    required final UserData userData,
   }) async {
     try {
       await _firebaseAuth.createUserWithEmailAndPassword(
@@ -147,12 +154,10 @@ class AuthenticationRepository {
     } catch (_) {
       throw const SignUpWithEmailAndPasswordFailure();
     }
-    if (_firebaseAuth.currentUser == null) {
-      throw const SignUpWithEmailAndPasswordFailure();
-    }
-    if (name != null) {
-      await _firebaseAuth.currentUser!.updateDisplayName(name);
-    }
+    await _usersRepository.updateUserData(
+      uid: _firebaseAuth.currentUser!.uid,
+      userData: userData,
+    );
   }
 
   /// Signs in with the provided [email] and [password].
@@ -175,7 +180,7 @@ class AuthenticationRepository {
   }
 
   /// Signs in anonymously.
-  /// 
+  ///
   /// Throws a [AnonymousSignInFailure] if an exception occurs.
   Future<void> logInAnonymously() async {
     try {
@@ -204,8 +209,18 @@ class AuthenticationRepository {
 
 extension on firebase_auth.User {
   /// Maps a [firebase_auth.User] into a [User].
-  User get toUser => User(
-    uid: uid,
-    email: email,
-  );
+  Future<User> toUser(final UsersRepository usersRepository) async {
+    if (email != null && email!.isNotEmpty) {
+      final UserData data = await usersRepository.fetchUserData(uid: uid);
+      return User(
+        uid: uid,
+        email: email!,
+        data: data,
+      );
+    }
+    return User(
+      uid: uid,
+      email: email ?? '',
+    );
+  }
 }

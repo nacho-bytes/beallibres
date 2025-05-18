@@ -9,10 +9,11 @@ class Copy extends Equatable {
   factory Copy.fromMap(
     final Map<String, dynamic> data,
     final String documentId,
-  ) => Copy(
-    id: documentId,
-    book: data[bookString] as String? ?? '',
-  );
+  ) =>
+      Copy(
+        id: documentId,
+        book: data[bookString] as String? ?? '',
+      );
 
   static const String bookString = 'book';
 
@@ -20,15 +21,15 @@ class Copy extends Equatable {
   final String book;
 
   Map<String, dynamic> toMap() => <String, dynamic>{
-    bookString: book,
-  };
+        bookString: book,
+      };
 
   @override
   List<Object?> get props => [id, book];
 
   @override
   String toString() => 'Copy{'
-    'id: $id'
-    ', book: $book'
-  '}';
+      'id: $id'
+      ', book: $book'
+      '}';
 }

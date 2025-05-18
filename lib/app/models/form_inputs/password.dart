@@ -17,14 +17,12 @@ class Password extends FormzInput<String, PasswordValidationError> {
   ) {
     if (value == null || value.isEmpty) {
       return null;
-    } else if (
-      value.length < 8
-      || value.length > 64
-      || !RegExp('[a-z]').hasMatch(value)
-      || !RegExp('[A-Z]').hasMatch(value)
-      || !RegExp('[0-9]').hasMatch(value)
-      || !RegExp(r'[!@#\$%^&*(),.?":{}|<>]').hasMatch(value)
-    ) {
+    } else if (value.length < 8 ||
+        value.length > 64 ||
+        !RegExp('[a-z]').hasMatch(value) ||
+        !RegExp('[A-Z]').hasMatch(value) ||
+        !RegExp('[0-9]').hasMatch(value) ||
+        !RegExp(r'[!@#\$%^&*(),.?":{}|<>]').hasMatch(value)) {
       return PasswordValidationError.invalid;
     }
     return null;

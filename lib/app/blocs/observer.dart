@@ -1,4 +1,5 @@
-import 'package:flutter_bloc/flutter_bloc.dart' show Bloc, BlocBase, BlocObserver, Change, Transition;
+import 'package:flutter_bloc/flutter_bloc.dart'
+    show Bloc, BlocBase, BlocObserver, Change, Transition;
 
 class AppBlocObserver extends BlocObserver {
   const AppBlocObserver();

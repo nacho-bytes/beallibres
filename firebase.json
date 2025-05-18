@@ -1,1 +1,41 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"beallibres","appId":"1:885479223467:android:69e965f5b6a611d70d87ee","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"beallibres","configurations":{"android":"1:885479223467:android:69e965f5b6a611d70d87ee","ios":"1:885479223467:ios:95edb3555b130c3c0d87ee","macos":"1:885479223467:ios:95edb3555b130c3c0d87ee","web":"1:885479223467:web:7136d560d491576f0d87ee","windows":"1:885479223467:web:8b82712dcb316bae0d87ee"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "beallibres",
+          "appId": "1:885479223467:android:69e965f5b6a611d70d87ee",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "beallibres",
+          "configurations": {
+            "android": "1:885479223467:android:69e965f5b6a611d70d87ee",
+            "ios": "1:885479223467:ios:95edb3555b130c3c0d87ee",
+            "macos": "1:885479223467:ios:95edb3555b130c3c0d87ee",
+            "web": "1:885479223467:web:7136d560d491576f0d87ee",
+            "windows": "1:885479223467:web:8b82712dcb316bae0d87ee"
+          }
+        }
+      }
+    }
+  },
+  "firestore": {
+    "rules": "firestore.rules"
+  },
+  "emulators": {
+    "singleProjectMode": false,
+    "ui": {
+      "enabled": true,
+      "port": 4000
+    },
+    "auth": {
+      "port": 9099
+    },
+    "firestore": {
+      "port": 8080
+    }
+  }
+}

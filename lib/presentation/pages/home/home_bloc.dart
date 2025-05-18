@@ -11,7 +11,7 @@ part 'home_state.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc({
     required final BooksRepository booksRepository,
-  }) :  _booksRepository = booksRepository,
+  })  : _booksRepository = booksRepository,
         super(const HomeState()) {
     on<HomeFetchBooksEvent>(_onFetchBooks);
   }

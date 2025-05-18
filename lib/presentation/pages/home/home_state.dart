@@ -16,7 +16,8 @@ final class HomeState extends Equatable {
   final bool hasReachedMax;
 
   @override
-  List<Object?> get props => <Object?>[isLoading, books, lastDocument, limit, hasReachedMax];
+  List<Object?> get props =>
+      <Object?>[isLoading, books, lastDocument, limit, hasReachedMax];
 
   HomeState copyWith({
     final bool? isLoading,
@@ -24,11 +25,12 @@ final class HomeState extends Equatable {
     final DocumentSnapshot<Map<String, dynamic>>? lastDocument,
     final int? limit,
     final bool? hasReachedMax,
-  }) => HomeState(
-    isLoading: isLoading ?? this.isLoading,
-    books: books ?? this.books,
-    lastDocument: lastDocument ?? this.lastDocument,
-    limit: limit ?? this.limit,
-    hasReachedMax: hasReachedMax ?? this.hasReachedMax,
-  );
+  }) =>
+      HomeState(
+        isLoading: isLoading ?? this.isLoading,
+        books: books ?? this.books,
+        lastDocument: lastDocument ?? this.lastDocument,
+        limit: limit ?? this.limit,
+        hasReachedMax: hasReachedMax ?? this.hasReachedMax,
+      );
 }

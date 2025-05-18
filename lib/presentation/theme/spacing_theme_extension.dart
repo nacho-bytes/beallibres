@@ -19,14 +19,16 @@ class SpacingThemeExtension extends ThemeExtension<SpacingThemeExtension> {
     final double? small,
     final double? medium,
     final double? large,
-  }) => SpacingThemeExtension(
-    small: small ?? this.small,
-    medium: medium ?? this.medium,
-    large: large ?? this.large,
-  );
+  }) =>
+      SpacingThemeExtension(
+        small: small ?? this.small,
+        medium: medium ?? this.medium,
+        large: large ?? this.large,
+      );
 
   @override
-  SpacingThemeExtension lerp(final ThemeExtension<SpacingThemeExtension>? other, final double t) {
+  SpacingThemeExtension lerp(
+      final ThemeExtension<SpacingThemeExtension>? other, final double t) {
     if (other is! SpacingThemeExtension) {
       return this;
     }

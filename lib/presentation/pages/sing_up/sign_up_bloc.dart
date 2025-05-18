@@ -1,4 +1,5 @@
-import 'package:flutter/widgets.dart' show FormState, GlobalKey, TextEditingController;
+import 'package:flutter/widgets.dart'
+    show FormState, GlobalKey, TextEditingController;
 import 'package:flutter_bloc/flutter_bloc.dart' show Bloc, Emitter;
 
 class SignUpState {
@@ -9,12 +10,14 @@ class SignUpState {
     final TextEditingController? confirmEmailController,
     final TextEditingController? passwordController,
     final TextEditingController? confirmPasswordController,
-  }) : formKey = formKey ?? GlobalKey<FormState>(),
+  })  : formKey = formKey ?? GlobalKey<FormState>(),
         nameController = nameController ?? TextEditingController(),
         emailController = emailController ?? TextEditingController(),
-        confirmEmailController = confirmEmailController ?? TextEditingController(),
+        confirmEmailController =
+            confirmEmailController ?? TextEditingController(),
         passwordController = passwordController ?? TextEditingController(),
-        confirmPasswordController = confirmPasswordController ?? TextEditingController();
+        confirmPasswordController =
+            confirmPasswordController ?? TextEditingController();
 
   final GlobalKey<FormState> formKey;
   final TextEditingController nameController;
@@ -30,14 +33,17 @@ class SignUpState {
     final TextEditingController? confirmEmailController,
     final TextEditingController? passwordController,
     final TextEditingController? confirmPasswordController,
-  }) => SignUpState(
-    formKey: formKey ?? this.formKey,
-    nameController: nameController ?? this.nameController,
-    emailController: emailController ?? this.emailController,
-    confirmEmailController: confirmEmailController ?? this.confirmEmailController,
-    passwordController: passwordController ?? this.passwordController,
-    confirmPasswordController: confirmPasswordController ?? this.confirmPasswordController,
-  );
+  }) =>
+      SignUpState(
+        formKey: formKey ?? this.formKey,
+        nameController: nameController ?? this.nameController,
+        emailController: emailController ?? this.emailController,
+        confirmEmailController:
+            confirmEmailController ?? this.confirmEmailController,
+        passwordController: passwordController ?? this.passwordController,
+        confirmPasswordController:
+            confirmPasswordController ?? this.confirmPasswordController,
+      );
 }
 
 sealed class SignUpEvent {}
@@ -65,6 +71,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     final SignUpSignUpEvent event,
     final Emitter<SignUpState> emit,
   ) async {
-    print('Sing up with name: ${event.name}, email: ${event.email}, password: ${event.password}');
+    print(
+        'Sing up with name: ${event.name}, email: ${event.email}, password: ${event.password}');
   }
 }

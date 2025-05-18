@@ -1,5 +1,33 @@
-import 'package:flutter/material.dart' show AnimatedSwitcher, Animation, Axis, BuildContext, Colors, Column, Drawer, Expanded, Icon, IconData, KeyedSubtree, ListTile, MediaQuery, NavigationBar, NavigationDestination, NavigationRail, NavigationRailDestination, Row, Scaffold, SizeTransition, SizedBox, StatelessWidget, Text, ValueKey, VerticalDivider, Widget;
-import 'package:go_router/go_router.dart' show GoRouter, GoRouterHelper, GoRouterState;
+import 'package:flutter/material.dart'
+    show
+        AnimatedSwitcher,
+        Animation,
+        Axis,
+        BuildContext,
+        Colors,
+        Column,
+        Drawer,
+        Expanded,
+        Icon,
+        IconData,
+        KeyedSubtree,
+        ListTile,
+        MediaQuery,
+        NavigationBar,
+        NavigationDestination,
+        NavigationRail,
+        NavigationRailDestination,
+        Row,
+        Scaffold,
+        SizeTransition,
+        SizedBox,
+        StatelessWidget,
+        Text,
+        ValueKey,
+        VerticalDivider,
+        Widget;
+import 'package:go_router/go_router.dart'
+    show GoRouter, GoRouterHelper, GoRouterState;
 
 /// The navigation destination.
 class AdaptativeNavigationDestination {
@@ -25,10 +53,10 @@ class AdaptativeNavigationDestination {
 
   @override
   String toString() => 'AdaptativeNavigationDestination{'
-    'title: $title'
-    ', icon: $icon'
-    ', location: $location'
-  '}';
+      'title: $title'
+      ', icon: $icon'
+      ', location: $location'
+      '}';
 }
 
 class AdaptiveNavigationTrail extends StatelessWidget {
@@ -42,18 +70,18 @@ class AdaptiveNavigationTrail extends StatelessWidget {
   final List<AdaptativeNavigationDestination> destinations;
 
   static bool isLargeScreen(final BuildContext context) =>
-    MediaQuery.of(context).size.width > 960.0;
+      MediaQuery.of(context).size.width > 960.0;
 
   static bool isMediumScreen(final BuildContext context) =>
-    MediaQuery.of(context).size.width > 640.0;
+      MediaQuery.of(context).size.width > 640.0;
 
   int? _computeSelectedIndex(final BuildContext context) {
     final GoRouterState? state = GoRouter.of(context).state;
-    final String? currentLocation = state?.matchedLocation; 
+    final String? currentLocation = state?.matchedLocation;
 
     final int index = destinations.indexWhere(
       (final AdaptativeNavigationDestination d) =>
-        d.location == currentLocation,
+          d.location == currentLocation,
     );
 
     return index >= 0 ? index : null;
@@ -72,7 +100,7 @@ class AdaptiveNavigationTrail extends StatelessWidget {
     final bool small = !medium;
 
     Widget leftNav;
-    String leftKey; 
+    String leftKey;
     if (large) {
       leftNav = _buildDrawer(currentIndex, context);
       leftKey = 'drawer';
@@ -102,7 +130,8 @@ class AdaptiveNavigationTrail extends StatelessWidget {
             transitionBuilder: (
               final Widget child,
               final Animation<double> anim,
-            ) => SizeTransition(
+            ) =>
+                SizeTransition(
               axis: Axis.horizontal,
               axisAlignment: -1,
               sizeFactor: anim,
@@ -128,7 +157,8 @@ class AdaptiveNavigationTrail extends StatelessWidget {
                   transitionBuilder: (
                     final Widget child,
                     final Animation<double> animation,
-                  ) => SizeTransition(
+                  ) =>
+                      SizeTransition(
                     sizeFactor: animation,
                     child: child,
                   ),
@@ -153,50 +183,60 @@ class AdaptiveNavigationTrail extends StatelessWidget {
       return const SizedBox.shrink();
     }
     return NavigationBar(
-      destinations: destinations.map(
-        (final AdaptativeNavigationDestination d) => NavigationDestination(
-          icon: Icon(d.icon),
-          label: d.title,
-        ),
-      ).toList(),
-      selectedIndex: currentIndex ?? 0, // TODO - Make it so it stays as the last selected
-      onDestinationSelected: (final int index) => _onDestinationSelected(context, index),
+      destinations: destinations
+          .map(
+            (final AdaptativeNavigationDestination d) => NavigationDestination(
+              icon: Icon(d.icon),
+              label: d.title,
+            ),
+          )
+          .toList(),
+      selectedIndex:
+          currentIndex ?? 0, // TODO - Make it so it stays as the last selected
+      onDestinationSelected: (final int index) =>
+          _onDestinationSelected(context, index),
     );
   }
 
   Widget _buildNavigationRail(
     final int? currentIndex,
     final BuildContext context,
-  ) => NavigationRail(
-    destinations: destinations.map(
-      (final AdaptativeNavigationDestination d) => NavigationRailDestination(
-        icon: Icon(d.icon),
-        label: Text(d.title),
-      ),
-    ).toList(),
-    selectedIndex: currentIndex,
-    onDestinationSelected: (
-      final int index,
-    ) => _onDestinationSelected(
-      context,
-      index,
-    ),
-  );
+  ) =>
+      NavigationRail(
+        destinations: destinations
+            .map(
+              (final AdaptativeNavigationDestination d) =>
+                  NavigationRailDestination(
+                icon: Icon(d.icon),
+                label: Text(d.title),
+              ),
+            )
+            .toList(),
+        selectedIndex: currentIndex,
+        onDestinationSelected: (
+          final int index,
+        ) =>
+            _onDestinationSelected(
+          context,
+          index,
+        ),
+      );
 
   Widget _buildDrawer(
     final int? currentIndex,
     final BuildContext context,
-  ) => Drawer(
-    child: Column(
-      children: <Widget>[
-        for (int i = 0; i < destinations.length; i++)
-          ListTile(
-            leading: Icon(destinations[i].icon),
-            title: Text(destinations[i].title),
-            selected: i == currentIndex,
-            onTap: () => _onDestinationSelected(context, i),
-          ),
-      ],
-    ),
-  );
+  ) =>
+      Drawer(
+        child: Column(
+          children: <Widget>[
+            for (int i = 0; i < destinations.length; i++)
+              ListTile(
+                leading: Icon(destinations[i].icon),
+                title: Text(destinations[i].title),
+                selected: i == currentIndex,
+                onTap: () => _onDestinationSelected(context, i),
+              ),
+          ],
+        ),
+      );
 }

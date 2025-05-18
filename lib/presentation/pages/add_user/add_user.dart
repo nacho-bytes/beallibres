@@ -1,27 +1,29 @@
 import 'package:flutter/material.dart'
-    show AlertDialog,
-    BuildContext,
-    Column,
-    EdgeInsets,
-    Expanded,
-    FilledButton,
-    Form,
-    Icon,
-    IconButton,
-    Icons,
-    InputDecoration,
-    MainAxisAlignment,
-    Padding,
-    Row,
-    StatelessWidget,
-    Text,
-    TextAlign,
-    TextFormField,
-    Theme,
-    Widget,
-    showDialog;
+    show
+        AlertDialog,
+        BuildContext,
+        Column,
+        EdgeInsets,
+        Expanded,
+        FilledButton,
+        Form,
+        Icon,
+        IconButton,
+        Icons,
+        InputDecoration,
+        MainAxisAlignment,
+        Padding,
+        Row,
+        StatelessWidget,
+        Text,
+        TextAlign,
+        TextFormField,
+        Theme,
+        Widget,
+        showDialog;
 import 'package:flutter_bloc/flutter_bloc.dart' show BlocBuilder, BlocProvider;
-import 'package:flutter_gen/gen_l10n/app_localizations.dart' show AppLocalizations;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart'
+    show AppLocalizations;
 import 'package:go_router/go_router.dart' show GoRouterHelper;
 
 import '../../theme/spacing_theme_extension.dart' show SpacingThemeExtension;

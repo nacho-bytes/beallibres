@@ -1,11 +1,38 @@
-import 'package:flutter/material.dart' show Card, CircularProgressIndicator, InkWell, ListTile, Theme;
+import 'package:flutter/material.dart'
+    show Card, CircularProgressIndicator, InkWell, ListTile, Theme;
 import 'package:flutter/widgets.dart'
-    show Align, Alignment, Axis, BorderRadius, BoxFit, BuildContext, Center, Clip, ClipRRect, CrossAxisAlignment, EdgeInsets, Flex, Flexible, GridView, Hero, Image, ImageChunkEvent, Padding, ScrollController, SliverGridDelegateWithMaxCrossAxisExtent, State, StatefulWidget, StatelessWidget, Text, Widget;
+    show
+        Align,
+        Alignment,
+        Axis,
+        BorderRadius,
+        BoxFit,
+        BuildContext,
+        Center,
+        Clip,
+        ClipRRect,
+        CrossAxisAlignment,
+        EdgeInsets,
+        Flex,
+        Flexible,
+        GridView,
+        Hero,
+        Image,
+        ImageChunkEvent,
+        Padding,
+        ScrollController,
+        SliverGridDelegateWithMaxCrossAxisExtent,
+        State,
+        StatefulWidget,
+        StatelessWidget,
+        Text,
+        Widget;
 import 'package:flutter_bloc/flutter_bloc.dart'
-    show BlocBuilder, BlocListener, BlocProvider, ReadContext;
+    show BlocBuilder, BlocProvider, ReadContext;
 import 'package:go_router/go_router.dart' show GoRouterHelper;
 
-import '../../../app/app.dart' show $BookDetailsRouteExtension, AuthenticationBloc, AuthenticationState, Book, BookDetailsRoute, UserType;
+import '../../../app/app.dart'
+    show $BookDetailsRouteExtension, Book, BookDetailsRoute;
 import '../../../domain/domain.dart' show BooksRepository;
 import '../../presentation.dart' show AdaptiveNavigationTrail;
 import 'home_bloc.dart' show HomeBloc, HomeFetchBooksEvent, HomeState;
@@ -59,52 +86,39 @@ class _BookGaleryPageState extends State<BookGaleryPage> {
 
   @override
   Widget build(final BuildContext context) => BlocProvider<HomeBloc>(
-    create: (final BuildContext context) => HomeBloc(
-      booksRepository: context.read<BooksRepository>(),
-    ),
-    child: BlocListener<AuthenticationBloc, AuthenticationState>(
-      listenWhen: (
-        final AuthenticationState previous,
-        final AuthenticationState current,
-      ) => previous.user.userType == UserType.none &&
-        current.user.userType != UserType.none,
-      listener: (
-        final BuildContext context,
-        final AuthenticationState state,
-      ) {
-        if (context.read<HomeBloc>().state.books.isEmpty) {
-          // context.read<HomeBloc>().add(const HomeFetchBooksEvent());
-        }
-      },
-      child: BlocBuilder<HomeBloc, HomeState>(
-        builder: (
-          final BuildContext context,
-          final HomeState state,
-        ) {
-          if (endOfPage && !state.isLoading && !state.hasReachedMax) {
-            context.read<HomeBloc>().add(const HomeFetchBooksEvent());
-          }
-          final bool isLargeScreen = AdaptiveNavigationTrail.isLargeScreen(context);
-          return GridView.builder(
-            controller: _scrollController,
-            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: isLargeScreen ? 500 : 200,
-              childAspectRatio: AdaptiveNavigationTrail.isLargeScreen(context)
-                  ? 3 / 2
-                  : 1 / 2,
-            ),
-            itemCount: state.books.length,
-            itemBuilder: (
-              final BuildContext context,
-              final int index,
-            ) => BookCard(
-              book: state.books[index],
-            ),
-          );
-        },
-      ),
-    ),
-  );
+        create: (final BuildContext context) => HomeBloc(
+          booksRepository: context.read<BooksRepository>(),
+        ),
+        child: BlocBuilder<HomeBloc, HomeState>(
+          builder: (
+            final BuildContext context,
+            final HomeState state,
+          ) {
+            if (endOfPage && !state.isLoading && !state.hasReachedMax) {
+              context.read<HomeBloc>().add(const HomeFetchBooksEvent());
+            }
+            final bool isLargeScreen =
+                AdaptiveNavigationTrail.isLargeScreen(context);
+            return GridView.builder(
+              controller: _scrollController,
+              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: isLargeScreen ? 500 : 200,
+                childAspectRatio: AdaptiveNavigationTrail.isLargeScreen(context)
+                    ? 3 / 2
+                    : 1 / 2,
+              ),
+              itemCount: state.books.length,
+              itemBuilder: (
+                final BuildContext context,
+                final int index,
+              ) =>
+                  BookCard(
+                book: state.books[index],
+              ),
+            );
+          },
+        ),
+      );
 }
 
 class BookCard extends StatelessWidget {
@@ -137,22 +151,25 @@ class BookCard extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: book.imageUrl.isNotEmpty
-                        ? Image.network(
-                          book.imageUrl,
-                          // fit: BoxFit.cover,
-                          fit: isLargeScreen ? BoxFit.cover : BoxFit.contain,
-                          loadingBuilder: (
-                            final BuildContext context,
-                            final Widget child,
-                            final ImageChunkEvent? loadingProgress,
-                          ) => loadingProgress == null
-                            ? child
-                            : const Center(child: CircularProgressIndicator()),
-                        )
-                        : Image.asset(
-                          'assets/images/book-cover-placeholder.png',
-                          fit: BoxFit.cover,
-                        ),
+                          ? Image.network(
+                              book.imageUrl,
+                              // fit: BoxFit.cover,
+                              fit:
+                                  isLargeScreen ? BoxFit.cover : BoxFit.contain,
+                              loadingBuilder: (
+                                final BuildContext context,
+                                final Widget child,
+                                final ImageChunkEvent? loadingProgress,
+                              ) =>
+                                  loadingProgress == null
+                                      ? child
+                                      : const Center(
+                                          child: CircularProgressIndicator()),
+                            )
+                          : Image.asset(
+                              'assets/images/book-cover-placeholder.png',
+                              fit: BoxFit.cover,
+                            ),
                     ),
                   ),
                 ),
