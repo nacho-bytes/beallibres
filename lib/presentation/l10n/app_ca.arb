@@ -220,5 +220,10 @@
     "lendings": "Préstecs",
     "@lendings": {
         "description": "Lendings"
+    },
+
+    "enabled": "Habilitat",
+    "@enabled": {
+        "description": "Enabled"
     }
 }

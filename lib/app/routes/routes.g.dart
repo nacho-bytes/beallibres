@@ -42,6 +42,13 @@ RouteBase get $shellNavigationRoute => ShellRouteData.$route(
               path: 'admin',
               name: 'admin',
               factory: $AdminRouteExtension._fromState,
+              routes: [
+                GoRouteData.$route(
+                  path: 'user-admin',
+                  name: 'user-admin',
+                  factory: $UserAdminRouteExtension._fromState,
+                ),
+              ],
             ),
           ],
         ),
@@ -145,6 +152,24 @@ extension $AdminRouteExtension on AdminRoute {
 
   String get location => GoRouteData.$location(
         '/admin',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $UserAdminRouteExtension on UserAdminRoute {
+  static UserAdminRoute _fromState(GoRouterState state) =>
+      const UserAdminRoute();
+
+  String get location => GoRouteData.$location(
+        '/admin/user-admin',
       );
 
   void go(BuildContext context) => context.go(location);

@@ -20,7 +20,8 @@ import '../../presentation/presentation.dart'
         BookGaleryPage,
         LoginPage,
         ProfilePage,
-        SignUpPage;
+        SignUpPage,
+        UserAdminPage;
 import '../blocs/navigation/navigation_bloc.dart'
     show NavigationBloc, NavigationState;
 
@@ -51,6 +52,12 @@ part 'routes.g.dart';
         TypedGoRoute<AdminRoute>(
           name: 'admin',
           path: 'admin',
+          routes: <TypedRoute<RouteData>>[
+            TypedGoRoute<UserAdminRoute>(
+              name: 'user-admin',
+              path: 'user-admin',
+            ),
+          ],
         ),
       ],
     ),
@@ -149,6 +156,17 @@ class AdminRoute extends GoRouteData {
     final GoRouterState state,
   ) =>
       const AdminPage();
+}
+
+/// The user admin route.
+@immutable
+class UserAdminRoute extends GoRouteData {
+  /// Creates the user admin route.
+  const UserAdminRoute();
+
+  @override
+  Widget build(final BuildContext context, final GoRouterState state) =>
+      const UserAdminPage();
 }
 
 /// The book details route.

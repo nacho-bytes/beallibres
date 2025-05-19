@@ -21,7 +21,10 @@ import 'package:flutter/widgets.dart'
         Widget;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart'
     show AppLocalizations;
+import 'package:go_router/go_router.dart' show GoRouterHelper;
 
+import '../../../app/routes/routes.dart'
+    show $UserAdminRouteExtension, UserAdminRoute;
 import '../../presentation.dart' show SpacingThemeExtension;
 
 class AdminPage extends StatelessWidget {
@@ -47,7 +50,7 @@ class AdminPage extends StatelessWidget {
             _IconCard(
               title: AppLocalizations.of(context)!.users,
               icon: Icons.person,
-              onPressed: () {},
+              onPressed: () => context.go(const UserAdminRoute().location),
             ),
             _IconCard(
               title: AppLocalizations.of(context)!.books,
